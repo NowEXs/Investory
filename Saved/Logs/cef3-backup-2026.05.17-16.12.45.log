@@ -1,0 +1,17 @@
+[20932:11972:0517/223155.415:WARNING:chrome_main_delegate.cc(745)] This is Chrome version 128.0.6613.138 (not a warning)
+[20932:11992:0517/223155.553:ERROR:google_update_settings.cc(265)] Failed opening key Software\Chromium to set usagestats; result: 5
+[20932:11972:0517/223155.576:WARNING:account_consistency_mode_manager.cc(77)] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
+[26412:15780:0517/223201.667:WARNING:frame_impl.cc(430)] virtual CefFrameImpl::SendProcessMessage sent to detached frame 5-9F7C60760B7F8C1E74C04A4123244B28 will be ignored
+[20932:26504:0517/223203.347:WARNING:browser_info.cc(345)] Returning a speculative frame for [7,9]
+[20932:11972:0517/223203.670:WARNING:browser_info.cc(345)] Returning a speculative frame for [9,9]
+[20932:11972:0517/223203.671:WARNING:browser_info.cc(345)] Returning a speculative frame for [9,9]
+[20932:11972:0517/223203.671:WARNING:browser_info.cc(345)] Returning a speculative frame for [9,9]
+[20932:11972:0517/223203.671:WARNING:browser_info.cc(345)] Returning a speculative frame for [9,9]
+[20932:26504:0517/223203.680:WARNING:browser_info.cc(345)] Returning a speculative frame for [9,9]
+[25288:11980:0517/223211.008:WARNING:codec.cc(525)] Explicitly added H264 constrained baseline to list of supported formats.
+[25288:11980:0517/223211.655:WARNING:codec.cc(525)] Explicitly added H264 constrained baseline to list of supported formats.
+[25288:8288:0517/223211.664:WARNING:codec.cc(525)] Explicitly added H264 constrained baseline to list of supported formats.
+[25288:8288:0517/223211.664:WARNING:codec.cc(525)] Explicitly added H264 constrained baseline to list of supported formats.
+[25288:8288:0517/223211.664:WARNING:codec.cc(525)] Explicitly added H264 constrained baseline to list of supported formats.
+[22828:19352:0517/223419.950:ERROR:shared_image_manager.cc(224)] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+[20932:11972:0517/231245.503:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
