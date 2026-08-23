@@ -1,33 +1,0 @@
-[3524:15696:0731/144048.080:WARNING:chrome_main_delegate.cc(745)] This is Chrome version 128.0.6613.138 (not a warning)
-[3524:15696:0731/144048.213:ERROR:os_crypt_win.cc(100)] Failed to decrypt: Key not valid for use in specified state. (0x8009000B)
-[3524:28180:0731/144048.385:ERROR:google_update_settings.cc(265)] Failed opening key Software\Chromium to set usagestats; result: 5
-[3524:15696:0731/144048.486:WARNING:account_consistency_mode_manager.cc(77)] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
-[3524:5844:0731/144054.320:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
-[3524:5844:0731/144054.325:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
-[3524:5844:0731/144054.328:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
-[3524:5844:0731/144054.331:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
-[3524:5844:0731/144054.712:WARNING:value_store_frontend.cc(47)] Reading ahfgeienlihckogmohjhadlkjgocpleb.alarms from  failed: IO error: .../MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
-[3524:5844:0731/144054.715:WARNING:value_store_frontend.cc(47)] Reading mhjfbmdgcfjbbpaeojofohoefgiehjai.alarms from  failed: IO error: .../MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
-[3524:15696:0731/144054.836:ERROR:device_event_log_impl.cc(196)] [14:40:54.834] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: Element not found. (0x490)
-[16600:12468:0731/144059.881:ERROR:backend_impl.cc(989)] Critical error found -8
-[16600:12468:0731/144100.361:WARNING:storage_block-inl.h(138)] Failed data load.
-[16600:12468:0731/144100.361:WARNING:storage_block-inl.h(138)] Failed data load.
-[16600:12468:0731/144100.364:ERROR:entry_impl.cc(955)] Failed to save user data
-[4880:3632:0731/144100.927:WARNING:frame_impl.cc(430)] virtual CefFrameImpl::SendProcessMessage sent to detached frame 5-9B5AB94FFA1C1435803E4E75FD0CDCB9 will be ignored
-[3524:15696:0731/144129.763:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/144134.763:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/144139.763:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/144144.765:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/144149.767:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/144154.783:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/144159.784:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/144204.783:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/144209.783:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/144214.784:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/144219.783:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/144224.787:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/144229.789:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/144235.109:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/144240.111:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/144245.112:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[3524:15696:0731/145121.921:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
