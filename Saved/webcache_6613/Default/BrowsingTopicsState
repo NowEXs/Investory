@@ -1,12 +1,5 @@
 {
    "epochs": [ {
-      "calculation_time": "13428560581784690",
-      "config_version": 0,
-      "model_version": "0",
-      "padded_top_topics_start_index": 0,
-      "taxonomy_version": 0,
-      "top_topics_and_observing_domains": [  ]
-   }, {
       "calculation_time": "13429631758943514",
       "config_version": 0,
       "model_version": "0",
@@ -27,7 +20,14 @@
       "padded_top_topics_start_index": 0,
       "taxonomy_version": 0,
       "top_topics_and_observing_domains": [  ]
+   }, {
+      "calculation_time": "13432635929749095",
+      "config_version": 0,
+      "model_version": "0",
+      "padded_top_topics_start_index": 0,
+      "taxonomy_version": 0,
+      "top_topics_and_observing_domains": [  ]
    } ],
    "hex_encoded_hmac_key": "42C8556C32BFD559A07663070A7F8E7533D472381A2A5E04862DB650CC54D861",
-   "next_scheduled_calculation_time": "13432557252334001"
+   "next_scheduled_calculation_time": "13433240730090618"
 }

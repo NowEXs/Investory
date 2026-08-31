@@ -1,5 +1,21 @@
-[11248:3628:0823/233029.356:WARNING:chrome_main_delegate.cc(745)] This is Chrome version 128.0.6613.138 (not a warning)
-[11248:26288:0823/233029.633:ERROR:google_update_settings.cc(265)] Failed opening key Software\Chromium to set usagestats; result: 5
-[11248:3628:0823/233029.733:WARNING:account_consistency_mode_manager.cc(77)] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
-[28976:28980:0823/233037.874:WARNING:frame_impl.cc(430)] virtual CefFrameImpl::SendProcessMessage sent to detached frame 5-7A2207597BABE5A93E27E6339F082C70 will be ignored
-[11248:3628:0823/233436.148:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
+[136732:56460:0831/144521.762:WARNING:chrome_main_delegate.cc(745)] This is Chrome version 128.0.6613.138 (not a warning)
+[136732:54576:0831/144522.100:ERROR:google_update_settings.cc(265)] Failed opening key Software\Chromium to set usagestats; result: 5
+[136732:56460:0831/144522.201:WARNING:account_consistency_mode_manager.cc(77)] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
+[73648:130756:0831/144530.754:WARNING:frame_impl.cc(430)] virtual CefFrameImpl::SendProcessMessage sent to detached frame 5-5F9356A9B990AF18163B5D328D92A59A will be ignored
+[60124:78784:0831/144532.204:WARNING:codec.cc(525)] Explicitly added H264 constrained baseline to list of supported formats.
+[60124:124272:0831/144532.247:WARNING:codec.cc(525)] Explicitly added H264 constrained baseline to list of supported formats.
+[60124:124272:0831/144532.248:WARNING:codec.cc(525)] Explicitly added H264 constrained baseline to list of supported formats.
+[60124:124272:0831/144532.249:WARNING:codec.cc(525)] Explicitly added H264 constrained baseline to list of supported formats.
+[136732:103748:0831/144532.492:WARNING:browser_info.cc(345)] Returning a speculative frame for [8,9]
+[136732:56460:0831/144532.623:WARNING:browser_info.cc(345)] Returning a speculative frame for [9,9]
+[136732:56460:0831/144532.623:WARNING:browser_info.cc(345)] Returning a speculative frame for [9,9]
+[136732:56460:0831/144532.623:WARNING:browser_info.cc(345)] Returning a speculative frame for [9,9]
+[136732:56460:0831/144532.623:WARNING:browser_info.cc(345)] Returning a speculative frame for [9,9]
+[136732:103748:0831/144532.630:WARNING:browser_info.cc(345)] Returning a speculative frame for [9,9]
+[80284:131008:0831/144532.841:WARNING:codec.cc(525)] Explicitly added H264 constrained baseline to list of supported formats.
+[80284:55988:0831/144532.897:WARNING:codec.cc(525)] Explicitly added H264 constrained baseline to list of supported formats.
+[80284:55988:0831/144532.897:WARNING:codec.cc(525)] Explicitly added H264 constrained baseline to list of supported formats.
+[80284:55988:0831/144532.897:WARNING:codec.cc(525)] Explicitly added H264 constrained baseline to list of supported formats.
+[80284:131008:0831/144534.316:WARNING:codec.cc(525)] Explicitly added H264 constrained baseline to list of supported formats.
+[60124:31300:0831/144741.409:WARNING:frame_impl.cc(430)] virtual CefFrameImpl::SendProcessMessage sent to detached frame 6-8CF2C55DC980226677E687FDDA44D87C will be ignored
+[75428:90180:0831/144741.543:ERROR:shared_image_manager.cc(224)] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
