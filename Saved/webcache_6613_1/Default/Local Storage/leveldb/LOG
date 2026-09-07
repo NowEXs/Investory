@@ -1,3 +1,2 @@
-2026/09/07-21:51:30.821 3a64 Reusing MANIFEST C:\Users\prato\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Local Storage\leveldb/MANIFEST-000001
-2026/09/07-21:51:30.841 3a64 Recovering log #3
-2026/09/07-21:51:30.846 3a64 Reusing old log C:\Users\prato\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Local Storage\leveldb/000003.log 
+2026/09/08-02:20:12.653 5f64 Creating DB C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Local Storage\leveldb since it was missing.
+2026/09/08-02:20:12.712 5f64 Reusing MANIFEST C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Local Storage\leveldb/MANIFEST-000001

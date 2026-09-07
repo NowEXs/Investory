@@ -1,4 +1,51 @@
-[27812:5068:0907/215130.289:WARNING:chrome_main_delegate.cc(745)] This is Chrome version 128.0.6613.138 (not a warning)
-[27812:17476:0907/215130.558:ERROR:google_update_settings.cc(265)] Failed opening key Software\Chromium to set usagestats; result: 5
-[27812:5068:0907/215130.671:WARNING:account_consistency_mode_manager.cc(77)] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
-[27812:5068:0907/215231.074:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
+[28188:13212:0908/022011.968:WARNING:chrome_main_delegate.cc(745)] This is Chrome version 128.0.6613.138 (not a warning)
+[28188:13212:0908/022012.161:ERROR:os_crypt_win.cc(100)] Failed to decrypt: Key not valid for use in specified state. (0x8009000B)
+[28188:15520:0908/022012.334:ERROR:google_update_settings.cc(265)] Failed opening key Software\Chromium to set usagestats; result: 5
+[28188:13212:0908/022012.469:WARNING:account_consistency_mode_manager.cc(77)] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
+[28188:31372:0908/022020.245:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
+[28188:31372:0908/022020.248:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
+[28188:31372:0908/022020.251:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
+[28188:31372:0908/022020.255:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
+[28188:13212:0908/022020.610:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:29512:0908/022020.690:WARNING:value_store_frontend.cc(47)] Reading ahfgeienlihckogmohjhadlkjgocpleb.alarms from  failed: IO error: .../MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
+[20224:3044:0908/022020.690:ERROR:backend_impl.cc(989)] Critical error found -8
+[20224:3044:0908/022020.690:ERROR:entry_impl.cc(1029)] No file for b2020000
+[20224:3044:0908/022020.692:WARNING:storage_block-inl.h(138)] Failed data load.
+[28188:29512:0908/022020.694:WARNING:value_store_frontend.cc(47)] Reading mhjfbmdgcfjbbpaeojofohoefgiehjai.alarms from  failed: IO error: .../MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
+[15744:956:0908/022021.738:WARNING:frame_impl.cc(430)] virtual CefFrameImpl::SendProcessMessage sent to detached frame 5-A120263C2E99E38D9CAE174CAED22868 will be ignored
+[28188:13212:0908/022025.543:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022030.548:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022035.562:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022040.565:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022045.616:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022050.643:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022055.643:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022100.679:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022105.857:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022110.874:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022116.216:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022121.215:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022126.547:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022131.221:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022136.535:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022141.553:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022146.563:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022232.569:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022237.621:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022257.890:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022318.550:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022323.550:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022328.560:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022333.559:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022338.573:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022343.592:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022348.909:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022353.928:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022358.942:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022403.941:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022419.592:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022424.593:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022429.596:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022434.923:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022450.280:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[28188:13212:0908/022615.955:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
