@@ -1,3 +1,11 @@
+<<<<<<< HEAD
 2026/09/09-13:00:09.879 fbc Reusing MANIFEST C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Site Characteristics Database/MANIFEST-000001
 2026/09/09-13:00:09.959 fbc Recovering log #6
 2026/09/09-13:00:09.960 fbc Reusing old log C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Site Characteristics Database/000006.log 
+=======
+2026/09/08-02:20:12.627 45b4 Log #3: 4 ops saved to Table #4 OK
+2026/09/08-02:20:12.657 45b4 Archiving C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Site Characteristics Database/000003.log: OK
+2026/09/08-02:20:12.658 45b4 Table #4: 4 entries OK
+2026/09/08-02:20:12.662 45b4 Archiving C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Site Characteristics Database/MANIFEST-000001: OK
+2026/09/08-02:20:12.688 45b4 **** Repaired leveldb C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Site Characteristics Database; recovered 1 files; 236 bytes. Some data may have been lost. ****
+>>>>>>> parent of 6bf353d (Scam_Update)
