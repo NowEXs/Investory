@@ -5,6 +5,11 @@
 			"guid": "00000000000000000000000000000000",
 			"description": "Default Uncontrolled Changelist",
 			"files": [
+				"C:/Users/USER/Documents/GitHub/Investory/Content/Asset/Blueprints/BP_KnowledgeBook.uasset",
+				"C:/Users/USER/Documents/GitHub/Investory/Content/Asset/Blueprints/BP_Dice.uasset",
+				"C:/Users/USER/Documents/GitHub/Investory/Content/Asset/Blueprints/WBP_ExamStatus.uasset",
+				"C:/Users/USER/Documents/GitHub/Investory/Content/TopDown/Blueprints/BP_TopDownCharacter.uasset",
+				"C:/Users/USER/Documents/GitHub/Investory/Content/Asset/Blueprints/WBP_BookText.uasset",
 				"C:/Users/prato/Documents/GitHub/Investory/Content/TopDown/Blueprints/BP_TopDownCharacter.uasset",
 				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/Blueprints/BP_Dice.uasset",
 				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/Blueprints/STRUCT_ChoiceAnswer.uasset",
