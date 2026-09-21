@@ -1,49 +1,0 @@
-[28980:24840:0916/134517.797:WARNING:chrome_main_delegate.cc(745)] This is Chrome version 128.0.6613.138 (not a warning)
-[28980:24840:0916/134518.021:ERROR:os_crypt_win.cc(100)] Failed to decrypt: Key not valid for use in specified state. (0x8009000B)
-[28980:13720:0916/134518.184:ERROR:google_update_settings.cc(265)] Failed opening key Software\Chromium to set usagestats; result: 5
-[28980:24840:0916/134518.262:WARNING:account_consistency_mode_manager.cc(77)] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
-[28980:21712:0916/134605.352:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
-[28980:21712:0916/134605.356:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
-[28980:21712:0916/134605.360:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
-[28980:21712:0916/134605.363:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
-[28980:24840:0916/134605.702:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:21712:0916/134605.795:WARNING:value_store_frontend.cc(47)] Reading ahfgeienlihckogmohjhadlkjgocpleb.alarms from  failed: IO error: .../MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
-[28980:21712:0916/134605.797:WARNING:value_store_frontend.cc(47)] Reading mhjfbmdgcfjbbpaeojofohoefgiehjai.alarms from  failed: IO error: .../MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
-[17736:24916:0916/134605.839:ERROR:backend_impl.cc(989)] Critical error found -8
-[17736:24916:0916/134605.841:ERROR:entry_impl.cc(1029)] No file for b2020014
-[17736:24916:0916/134605.841:WARNING:storage_block-inl.h(138)] Failed data load.
-[17736:27616:0916/134606.088:WARNING:cache_util.cc(144)] Unable to delete cache folder.
-[3844:32984:0916/134607.126:WARNING:frame_impl.cc(430)] virtual CefFrameImpl::SendProcessMessage sent to detached frame 5-BD0C695C7C2643050B4C4083A2090599 will be ignored
-[28980:24840:0916/134610.586:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/135137.147:ERROR:device_event_log_impl.cc(196)] [13:51:37.132] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: Element not found. (0x490)
-[28980:24840:0916/135137.163:ERROR:device_event_log_impl.cc(196)] [13:51:37.154] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: Element not found. (0x490)
-[28980:24840:0916/135137.164:ERROR:device_event_log_impl.cc(196)] [13:51:37.163] USB: usb_service_win.cc:308 SetupDiEnumDeviceInterfaces: No more data is available. (0x103)
-[28980:24840:0916/141813.082:ERROR:device_event_log_impl.cc(196)] [14:18:13.082] USB: usb_service_win.cc:73 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 23}) failed: Element not found. (0x490)
-[28980:24840:0916/141813.095:ERROR:device_event_log_impl.cc(196)] [14:18:13.083] USB: usb_service_win.cc:308 SetupDiEnumDeviceInterfaces: No more data is available. (0x103)
-[28980:24840:0916/141915.751:ERROR:device_event_log_impl.cc(196)] [14:19:15.723] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: Element not found. (0x490)
-[28980:13720:0916/143246.480:WARNING:dns_config_service_win.cc(605)] Failed to read DnsConfig.
-[17736:18788:0916/143246.503:WARNING:dns_config_service_win.cc(605)] Failed to read DnsConfig.
-[28980:13720:0916/143251.488:WARNING:dns_config_service_win.cc(605)] Failed to read DnsConfig.
-[17736:5244:0916/143251.514:WARNING:dns_config_service_win.cc(605)] Failed to read DnsConfig.
-[28980:21712:0916/143301.495:WARNING:dns_config_service_win.cc(605)] Failed to read DnsConfig.
-[17736:5244:0916/143301.529:WARNING:dns_config_service_win.cc(605)] Failed to read DnsConfig.
-[28980:21712:0916/143321.504:WARNING:dns_config_service_win.cc(605)] Failed to read DnsConfig.
-[17736:5244:0916/143321.552:WARNING:dns_config_service_win.cc(605)] Failed to read DnsConfig.
-[28980:21712:0916/143432.210:WARNING:dns_config_service_win.cc(605)] Failed to read DnsConfig.
-[17736:5244:0916/143432.215:WARNING:dns_config_service_win.cc(605)] Failed to read DnsConfig.
-[28980:24840:0916/144110.832:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/144116.036:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/144121.065:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/144126.084:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/144151.090:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/144231.101:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/144301.443:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/144311.456:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/144321.455:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/144331.781:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/144342.124:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/144352.128:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/144447.669:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/144452.671:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/144533.014:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
-[28980:24840:0916/144806.402:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
