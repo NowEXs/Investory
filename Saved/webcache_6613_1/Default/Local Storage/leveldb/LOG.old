@@ -1,3 +1,9 @@
+<<<<<<< Updated upstream
 2026/09/21-18:28:36.163 18828 Reusing MANIFEST C:\Users\prato\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Local Storage\leveldb/MANIFEST-000001
 2026/09/21-18:28:36.168 18828 Recovering log #3
 2026/09/21-18:28:36.172 18828 Reusing old log C:\Users\prato\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Local Storage\leveldb/000003.log 
+=======
+2026/09/21-18:46:35.674 17fd4 Reusing MANIFEST C:\Users\prato\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Local Storage\leveldb/MANIFEST-000001
+2026/09/21-18:46:35.679 17fd4 Recovering log #3
+2026/09/21-18:46:35.685 17fd4 Reusing old log C:\Users\prato\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Local Storage\leveldb/000003.log 
+>>>>>>> Stashed changes

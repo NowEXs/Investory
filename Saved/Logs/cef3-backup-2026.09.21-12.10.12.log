@@ -1,0 +1,22 @@
+[94664:73320:0921/184635.452:WARNING:chrome_main_delegate.cc(745)] This is Chrome version 128.0.6613.138 (not a warning)
+[94664:43888:0921/184635.573:ERROR:google_update_settings.cc(265)] Failed opening key Software\Chromium to set usagestats; result: 5
+[94664:73320:0921/184635.577:WARNING:account_consistency_mode_manager.cc(77)] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
+[62220:103168:0921/184641.731:WARNING:frame_impl.cc(430)] virtual CefFrameImpl::SendProcessMessage sent to detached frame 5-513E0C3379E15FB7F0F12083CF62A0AC will be ignored
+[94664:73320:0921/190520.428:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190525.473:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190530.499:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190535.513:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190540.519:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190545.577:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190550.577:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190555.617:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190600.688:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190605.690:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190610.724:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190615.729:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190620.739:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190625.739:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190630.740:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190635.740:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/190640.742:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[94664:73320:0921/191012.267:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
