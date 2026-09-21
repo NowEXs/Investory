@@ -1,5 +1,12 @@
-[28136:48672:0921/182835.921:WARNING:chrome_main_delegate.cc(745)] This is Chrome version 128.0.6613.138 (not a warning)
-[28136:67496:0921/182836.036:ERROR:google_update_settings.cc(265)] Failed opening key Software\Chromium to set usagestats; result: 5
-[28136:48672:0921/182836.048:WARNING:account_consistency_mode_manager.cc(77)] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
-[31772:65956:0921/182841.951:WARNING:frame_impl.cc(430)] virtual CefFrameImpl::SendProcessMessage sent to detached frame 5-4F8E58D5A4CE09D4EC4E185CC33C14D6 will be ignored
-[28136:48672:0921/184143.988:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
+[5652:23564:0921/202055.608:WARNING:chrome_main_delegate.cc(745)] This is Chrome version 128.0.6613.138 (not a warning)
+[5652:23564:0921/202055.834:ERROR:os_crypt_win.cc(100)] Failed to decrypt: Key not valid for use in specified state. (0x8009000B)
+[5652:2516:0921/202056.029:ERROR:google_update_settings.cc(265)] Failed opening key Software\Chromium to set usagestats; result: 5
+[5652:23564:0921/202056.144:WARNING:account_consistency_mode_manager.cc(77)] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
+[5652:23808:0921/202104.174:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
+[5652:23808:0921/202104.179:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
+[5652:23808:0921/202104.184:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
+[5652:23808:0921/202104.188:WARNING:leveldb_database.cc(141)] Unable to open C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata: IO error: C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\shared_proto_db\metadata/MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
+[5652:23564:0921/202106.574:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[5652:14536:0921/202109.676:WARNING:value_store_frontend.cc(47)] Reading ahfgeienlihckogmohjhadlkjgocpleb.alarms from  failed: IO error: .../MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
+[5652:14536:0921/202109.682:WARNING:value_store_frontend.cc(47)] Reading mhjfbmdgcfjbbpaeojofohoefgiehjai.alarms from  failed: IO error: .../MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
+[8276:24644:0921/202111.242:WARNING:frame_impl.cc(430)] virtual CefFrameImpl::SendProcessMessage sent to detached frame 5-B3B0124B42AD38AAD484BD9247399BEB will be ignored
