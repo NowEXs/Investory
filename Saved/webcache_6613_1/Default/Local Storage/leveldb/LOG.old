@@ -1,9 +1,5 @@
-<<<<<<< Updated upstream
-2026/09/21-18:28:36.163 18828 Reusing MANIFEST C:\Users\prato\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Local Storage\leveldb/MANIFEST-000001
-2026/09/21-18:28:36.168 18828 Recovering log #3
-2026/09/21-18:28:36.172 18828 Reusing old log C:\Users\prato\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Local Storage\leveldb/000003.log 
-=======
-2026/09/21-18:46:35.674 17fd4 Reusing MANIFEST C:\Users\prato\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Local Storage\leveldb/MANIFEST-000001
-2026/09/21-18:46:35.679 17fd4 Recovering log #3
-2026/09/21-18:46:35.685 17fd4 Reusing old log C:\Users\prato\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Local Storage\leveldb/000003.log 
->>>>>>> Stashed changes
+2026/09/22-12:35:08.152 c7b8 Reusing MANIFEST C:\Users\prato\Documents\GitHub\Investory\Saved\webcache_6613_1\Default\Local Storage\leveldb/MANIFEST-000001
+2026/09/22-12:35:08.162 c7b8 Recovering log #3
+2026/09/22-12:35:08.162 c7b8 Level-0 table #3: started
+2026/09/22-12:35:08.170 c7b8 Level-0 table #3: 60624 bytes OK
+2026/09/22-12:35:08.178 c7b8 Delete type=0 #3

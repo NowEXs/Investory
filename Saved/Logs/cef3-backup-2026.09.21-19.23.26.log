@@ -1,0 +1,8 @@
+[71388:86072:0922/022227.979:WARNING:chrome_main_delegate.cc(745)] This is Chrome version 128.0.6613.138 (not a warning)
+[71388:94668:0922/022228.317:ERROR:google_update_settings.cc(265)] Failed opening key Software\Chromium to set usagestats; result: 5
+[71388:86072:0922/022228.473:WARNING:account_consistency_mode_manager.cc(77)] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
+[71388:86072:0922/022234.639:WARNING:alloy_constrained_window_views_client.cc(77)] No likely focused browser
+[71388:86072:0922/022234.908:WARNING:alloy_constrained_window_views_client.cc(77)] No likely focused browser
+[71388:86072:0922/022235.691:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
+[92484:88652:0922/022237.727:WARNING:frame_impl.cc(430)] virtual CefFrameImpl::SendProcessMessage sent to detached frame 5-9ADB50DF535FB8B8FCDB4E1358F5108F will be ignored
+[71388:86072:0922/022326.107:WARNING:page_discarding_helper.cc(138)] Discarding multiple pages with target (kb): 0
