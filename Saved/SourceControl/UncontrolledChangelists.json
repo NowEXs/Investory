@@ -16,18 +16,19 @@
 				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/DT_Stocklist.uasset",
 				"C:/Users/prato/Documents/GitHub/Investory/Content/TopDown/Blueprints/BP_InvestoryGameState.uasset",
 				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/General_Events_3Types_TH.uasset",
-				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/struct/STRUCT_EventMoneyData.uasset",
-				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/struct/STRUCT_EventKnowlegdeData.uasset",
-				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/struct/STRUCT_EventKMData.uasset",
-				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/struct/STRUCT_EventHMData.uasset",
-				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/struct/STRUCT_EventHappyData.uasset",
 				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/Blueprints/E_EventType.uasset",
 				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/struct/STRUCT_EventAllData.uasset",
 				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/DT_FixEventList.uasset",
 				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/struct/STRUCT_NewsData.uasset",
 				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/DT_News.uasset",
 				"C:/Users/prato/Documents/GitHub/Investory/Content/TopDown/Blueprints/BP_TopDownGameMode.uasset",
-				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/Blueprints/WBP_Result.uasset"
+				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/Blueprints/WBP_Result.uasset",
+				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/Blueprints/WBP_Dice.uasset",
+				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/struct/STRUCT_EventMoneyData.uasset",
+				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/struct/STRUCT_EventKnowlegdeData.uasset",
+				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/struct/STRUCT_EventKMData.uasset",
+				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/struct/STRUCT_EventHMData.uasset",
+				"C:/Users/prato/Documents/GitHub/Investory/Content/Asset/struct/STRUCT_EventHappyData.uasset"
 			]
 		}
 	]

@@ -1,0 +1,8 @@
+[41640:46736:0922/183940.930:WARNING:chrome_main_delegate.cc(745)] This is Chrome version 128.0.6613.138 (not a warning)
+[41640:60224:0922/183941.507:ERROR:google_update_settings.cc(265)] Failed opening key Software\Chromium to set usagestats; result: 5
+[41640:46736:0922/183941.757:WARNING:account_consistency_mode_manager.cc(77)] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
+[65676:45924:0922/184001.326:WARNING:frame_impl.cc(430)] virtual CefFrameImpl::SendProcessMessage sent to detached frame 5-28147F59C859D51656A219141DE4ECB8 will be ignored
+[41640:46736:0923/001442.399:ERROR:device_event_log_impl.cc(196)] [00:14:42.370] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: Element not found. (0x490)
+[41640:46736:0923/001442.459:ERROR:device_event_log_impl.cc(196)] [00:14:42.442] USB: usb_service_win.cc:308 SetupDiEnumDeviceInterfaces: No more data is available. (0x103)
+[41640:46736:0923/001442.459:ERROR:device_event_log_impl.cc(196)] [00:14:42.451] USB: usb_service_win.cc:308 SetupDiEnumDeviceInterfaces: No more data is available. (0x103)
+[41640:46736:0923/020025.268:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
