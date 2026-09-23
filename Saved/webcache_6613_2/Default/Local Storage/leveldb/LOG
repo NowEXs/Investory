@@ -1,2 +1,3 @@
-2026/09/09-13:00:28.624 2b38 Creating DB C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_2\Default\Local Storage\leveldb since it was missing.
-2026/09/09-13:00:28.743 2b38 Reusing MANIFEST C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_2\Default\Local Storage\leveldb/MANIFEST-000001
+2026/09/23-13:38:29.873 7e24 Reusing MANIFEST C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_2\Default\Local Storage\leveldb/MANIFEST-000001
+2026/09/23-13:38:29.905 7e24 Recovering log #3
+2026/09/23-13:38:29.925 7e24 Reusing old log C:\Users\USER\Documents\GitHub\Investory\Saved\webcache_6613_2\Default\Local Storage\leveldb/000003.log 
