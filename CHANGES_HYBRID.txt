@@ -1,0 +1,20 @@
+INVESTORY - Hybrid + Git Fix
+
+Added / updated:
+- .gitignore
+- .gitattributes
+- FixGitForUnreal.ps1
+- FixGitForUnreal.bat
+- HYBRID_SETUP_TH.md
+- Source/Thesis/Public/InvestoryCharacterBase.h
+- Source/Thesis/Private/InvestoryCharacterBase.cpp
+- Source/Thesis/Public/InvestoryInvestmentComponent.h (expanded Blueprint API)
+- Source/Thesis/Private/InvestoryInvestmentComponent.cpp (snapshot, break-even, available cash/shares, safer execution)
+
+C++ systems now available:
+1) Status: Money / Happiness / Knowledge / Burnout / Financial Stress / Knowledge tier
+2) Investment: pending buy/sell, fees, reserved cash/shares, avg cost, realized/unrealized P&L, break-even
+3) Turn pressure: roll Happiness cost, Burnout gate/force, periodic living expense, unpaid-expense penalty
+4) UI helper: GetStockSnapshot() returns the selected stock data in one Blueprint node
+
+No Content/*.uasset or map files were rewritten by this patch.

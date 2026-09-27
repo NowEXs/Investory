@@ -1,0 +1,15 @@
+# Unreal assets are binary. Prevent Git from attempting text conversions/diffs.
+*.uasset -text
+*.umap -text
+*.ubulk -text
+*.uexp -text
+*.uptnl -text
+
+# Common binary art/audio files
+*.png -text
+*.jpg -text
+*.jpeg -text
+*.tga -text
+*.wav -text
+*.mp3 -text
+*.fbx -text

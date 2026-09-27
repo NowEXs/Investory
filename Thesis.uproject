@@ -15,5 +15,12 @@
 			"Name": "GameplayStateTree",
 			"Enabled": true
 		}
+	],
+	"Modules": [
+		{
+			"Name": "Thesis",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
 	]
 }
