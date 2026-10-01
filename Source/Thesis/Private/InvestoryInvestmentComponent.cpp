@@ -120,30 +120,7 @@ bool UInvestoryInvestmentComponent::CancelOrder(FName StockId, FText& OutReason)
 
 FInvestoryExecutionResult UInvestoryInvestmentComponent::AdvanceOrder(FName StockId, float CurrentPrice)
 {
-    FInvestoryExecutionResult EmptyResult;
-    FInvestoryPendingOrder* Order = PendingOrders.Find(StockId);
-    if (!Order || Order->Status != EInvestoryOrderStatus::Pending || CurrentPrice <= 0.0f)
-    {
-        return EmptyResult;
-    }
-
-    Order->TurnsRemaining = FMath::Max(0, Order->TurnsRemaining - 1);
-    OnOrderChanged.Broadcast(*Order);
-
-    if (Order->TurnsRemaining > 0)
-    {
-        return EmptyResult;
-    }
-
-    FInvestoryExecutionResult Result = ExecuteOrder(*Order, CurrentPrice);
-    PendingOrders.Remove(StockId);
-
-    if (Result.bSuccess)
-    {
-        OnOrderExecuted.Broadcast(Result);
-    }
-
-    return Result;
+    return AdvanceOrderInternal(StockId, CurrentPrice, false, 0.0f);
 }
 
 bool UInvestoryInvestmentComponent::HasPendingOrder(FName StockId) const
@@ -242,6 +219,22 @@ int32 UInvestoryInvestmentComponent::GetPendingOrderCount() const
     return Count;
 }
 
+TArray<FName> UInvestoryInvestmentComponent::GetPendingStockIds() const
+{
+    TArray<FName> Result;
+    Result.Reserve(PendingOrders.Num());
+
+    for (const TPair<FName, FInvestoryPendingOrder>& Pair : PendingOrders)
+    {
+        if (Pair.Value.Status == EInvestoryOrderStatus::Pending)
+        {
+            Result.Add(Pair.Key);
+        }
+    }
+
+    return Result;
+}
+
 float UInvestoryInvestmentComponent::GetBreakEvenPrice(FName StockId) const
 {
     const float AverageCost = GetAverageCost(StockId);
@@ -276,6 +269,15 @@ FInvestoryExecutionResult UInvestoryInvestmentComponent::AdvanceOrderWithCash(
     float CurrentPrice,
     float CurrentCash)
 {
+    return AdvanceOrderInternal(StockId, CurrentPrice, true, CurrentCash);
+}
+
+FInvestoryExecutionResult UInvestoryInvestmentComponent::AdvanceOrderInternal(
+    FName StockId,
+    float CurrentPrice,
+    bool bValidateCash,
+    float CurrentCash)
+{
     FInvestoryExecutionResult Result;
     FInvestoryPendingOrder* Order = PendingOrders.Find(StockId);
     if (!Order || Order->Status != EInvestoryOrderStatus::Pending || CurrentPrice <= 0.0f)
@@ -291,15 +293,14 @@ FInvestoryExecutionResult UInvestoryInvestmentComponent::AdvanceOrderWithCash(
         return Result;
     }
 
-    if (Order->Side == EInvestoryOrderSide::Buy)
+    if (bValidateCash && Order->Side == EInvestoryOrderSide::Buy)
     {
         const float ThisOrderReservation =
             (Order->SubmittedPrice * static_cast<float>(Order->Quantity)) + Order->EstimatedFee;
         const float CashReservedForOtherOrders = FMath::Max(0.0f, ReservedCash - ThisOrderReservation);
         const float CashAvailableForThisOrder = FMath::Max(0.0f, CurrentCash - CashReservedForOtherOrders);
-        const float ActualRequiredCash =
-            (CurrentPrice * static_cast<float>(Order->Quantity)) +
-            EstimateFee(CurrentPrice * static_cast<float>(Order->Quantity));
+        const float Gross = CurrentPrice * static_cast<float>(Order->Quantity);
+        const float ActualRequiredCash = Gross + EstimateFee(Gross);
 
         if (CashAvailableForThisOrder + KINDA_SMALL_NUMBER < ActualRequiredCash)
         {
@@ -312,7 +313,7 @@ FInvestoryExecutionResult UInvestoryInvestmentComponent::AdvanceOrderWithCash(
             Result.Side = Order->Side;
             Result.Quantity = Order->Quantity;
             Result.ExecutedPrice = CurrentPrice;
-            Result.Fee = EstimateFee(CurrentPrice * static_cast<float>(Order->Quantity));
+            Result.Fee = EstimateFee(Gross);
             Result.Message = LOCTEXT("BuyRejectedPriceMoved", "คำสั่งซื้อไม่สำเร็จ: เงินสดปัจจุบันไม่พอสำหรับราคาที่ดำเนินการ");
 
             PendingOrders.Remove(StockId);
