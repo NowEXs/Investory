@@ -27,13 +27,13 @@ public:
     UInvestoryStatusComponent();
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Status")
-    float Money = 10000.0f;
+    float Money = 20000.0f;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Status", meta=(ClampMin="0", ClampMax="100"))
     int32 Happiness = 50;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Status", meta=(ClampMin="0", ClampMax="100"))
-    int32 Knowledge = 50;
+    int32 Knowledge = 10;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Thresholds")
     float FinancialStressThreshold = 3000.0f;
