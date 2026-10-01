@@ -223,6 +223,10 @@ public:
     UFUNCTION(BlueprintPure, Category="Investory|Trading")
     int32 GetPendingOrderCount() const;
 
+    /** Returns only currently pending stock ids. Useful for generic Blueprint loops later. */
+    UFUNCTION(BlueprintPure, Category="Investory|Trading")
+    TArray<FName> GetPendingStockIds() const;
+
     UFUNCTION(BlueprintPure, Category="Investory|Trading")
     float GetBreakEvenPrice(FName StockId) const;
 
@@ -246,5 +250,6 @@ private:
     float ReservedCash = 0.0f;
 
     FInvestoryStockPosition& FindOrAddPosition(FName StockId);
+    FInvestoryExecutionResult AdvanceOrderInternal(FName StockId, float CurrentPrice, bool bValidateCash, float CurrentCash);
     FInvestoryExecutionResult ExecuteOrder(FInvestoryPendingOrder& Order, float CurrentPrice);
 };

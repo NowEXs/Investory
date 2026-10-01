@@ -1,51 +1,22 @@
-# Unreal Engine generated folders
+# Unreal generated folders
 Binaries/
 DerivedDataCache/
 Intermediate/
 Saved/
-
-# Generated folders inside plugins (if plugins are added later)
-Plugins/*/Binaries/
-Plugins/*/Intermediate/
-
-# IDE / editor generated files
 .vs/
-.vscode/
 .idea/
+
+# Visual Studio / Rider generated files
+*.VC.db
+*.VC.opendb
 *.sln
 *.suo
 *.user
-*.userprefs
-*.VC.db
-*.VC.opendb
 *.opensdf
 *.sdf
-*.opendb
-*.code-workspace
-*.xcodeproj
-*.xcworkspace
-
-# Build/debug artifacts
-*.pdb
-*.obj
-*.pch
-*.ipch
-*.dll
-*.exe
-*.exp
-*.ilk
-*.lib
-*.log
 *.tmp
-*.cache
+*.log
 
 # OS files
 .DS_Store
 Thumbs.db
-Desktop.ini
-
-# Keep the actual Unreal project source/content/config
-!Config/
-!Content/
-!Source/
-!*.uproject
