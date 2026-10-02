@@ -3,6 +3,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InvestoryTurnFlowComponent.h"
+#include "InvestoryEvaluationComponent.h"
+#include "InvestoryLearningComponent.h"
 #include "InvestoryCharacterBase.generated.h"
 
 class UInvestoryStatusComponent;
@@ -79,6 +81,12 @@ public:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Investory|Components")
     TObjectPtr<UInvestoryTurnFlowComponent> TurnFlowComponent;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Investory|Components")
+    TObjectPtr<UInvestoryEvaluationComponent> EvaluationComponent;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Investory|Components")
+    TObjectPtr<UInvestoryLearningComponent> LearningComponent;
 
     // ---- Pressure rules ----------------------------------------------------
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Turn Rules", meta=(ClampMin="0"))
@@ -161,6 +169,116 @@ public:
 
     UFUNCTION(BlueprintPure, Category="Investory|Turn")
     bool CanRollNormally() const;
+
+
+    // ---- Research / evaluation --------------------------------------------
+
+    /** Start a clean evaluation session. Call once after your Blueprint status values are initialized. */
+    UFUNCTION(BlueprintCallable, Category="Investory|Evaluation")
+    void BeginEvaluationSession(float InitialMoney, int32 InitialHappiness, int32 InitialKnowledge, FString SessionLabel);
+
+    /** Keep the research context aligned with the board year/lap. */
+    UFUNCTION(BlueprintCallable, Category="Investory|Evaluation")
+    void SetEvaluationYear(int32 Year);
+
+    UFUNCTION(BlueprintCallable, Category="Investory|Evaluation|Event")
+    void RecordEventChoiceForEvaluation(FName EventId, int32 ChoiceIndex, FText ChoiceLabel,
+        float MoneyDelta, int32 HappinessDelta, int32 KnowledgeDelta,
+        float CurrentMoney, int32 CurrentHappiness, int32 CurrentKnowledge);
+
+    UFUNCTION(BlueprintCallable, Category="Investory|Evaluation|Scam")
+    void RecordScamAnswerForEvaluation(FName QuestionId, int32 ChoiceIndex, EInvestoryScamAnswerQuality Quality,
+        float MoneyDelta, int32 HappinessDelta, int32 KnowledgeDelta,
+        float CurrentMoney, int32 CurrentHappiness, int32 CurrentKnowledge);
+
+
+    /** Detailed Scam recorder that also returns a feedback struct ready for the feedback page. */
+    UFUNCTION(BlueprintCallable, Category="Investory|Evaluation|Scam")
+    FInvestoryScamFeedback RecordScamAnswerDetailedForEvaluation(FName QuestionId, int32 ChoiceIndex,
+        FText ChoiceLabel, EInvestoryScamAnswerQuality Quality, FText Explanation, FText WarningSign,
+        float MoneyDelta, int32 HappinessDelta, int32 KnowledgeDelta,
+        float CurrentMoney, int32 CurrentHappiness, int32 CurrentKnowledge);
+
+
+    /** One-node Scam flow: lookup feedback by displayed question title, record research log, and expose the learned concept. */
+    UFUNCTION(BlueprintCallable, Category="Investory|Evaluation|Scam")
+    FInvestoryScamFeedback RecordScamAnswerWithLearningForEvaluation(UDataTable* ScamFeedbackTable,
+        FName QuestionId, FText QuestionTitle, int32 ChoiceIndex, FText ChoiceLabel,
+        EInvestoryScamAnswerQuality Quality,
+        float MoneyDelta, int32 HappinessDelta, int32 KnowledgeDelta,
+        float CurrentMoney, int32 CurrentHappiness, int32 CurrentKnowledge,
+        FInvestoryScamLearningFeedback& OutLearningFeedback);
+
+    /** Fixed Final Exam / knowledge-check recorder, separate from random Scam encounters. */
+    UFUNCTION(BlueprintCallable, Category="Investory|Evaluation|Knowledge Exam")
+    FInvestoryKnowledgeExamFeedback RecordKnowledgeExamAnswerForEvaluation(FName QuestionId,
+        EInvestoryKnowledgeTopic Topic, int32 ChoiceIndex, FText ChoiceLabel, bool bCorrect,
+        float PointsEarned, float MaxPoints, FText Explanation, FText LearningPoint,
+        float CurrentMoney, int32 CurrentHappiness, int32 CurrentKnowledge);
+
+
+    UFUNCTION(BlueprintCallable, Category="Investory|Learning")
+    bool ExposeLearningConcept(EInvestoryLearningConcept Concept, FName SourceId, FText Note);
+
+    UFUNCTION(BlueprintPure, Category="Investory|Learning")
+    TArray<EInvestoryLearningConcept> GetExperiencedLearningConcepts() const;
+
+    /** Starts the Final Exam from questions the player has actually been exposed to. */
+    UFUNCTION(BlueprintCallable, Category="Investory|Learning|Final Exam")
+    int32 StartFinalKnowledgeExam(UDataTable* QuestionTable, int32 DesiredQuestionCount, int32 CurrentKnowledge,
+        int32 RandomSeed, FText& OutMessage);
+
+    UFUNCTION(BlueprintCallable, Category="Investory|Learning|Final Exam")
+    bool GetCurrentFinalKnowledgeQuestion(UDataTable* QuestionTable, FInvestoryExamQuestionView& OutQuestion) const;
+
+    UFUNCTION(BlueprintCallable, Category="Investory|Learning|Final Exam")
+    FInvestoryExamSubmitResult SubmitFinalKnowledgeExamAnswer(UDataTable* QuestionTable, int32 ChoiceIndex,
+        float CurrentMoney, int32 CurrentHappiness, int32 CurrentKnowledge);
+
+    UFUNCTION(BlueprintPure, Category="Investory|Learning|Final Exam")
+    FInvestoryExamSessionState GetFinalKnowledgeExamState() const;
+
+    /** Applies the one-time exam scholarship to StatusComponent. Call SyncStatusToCharacter afterward in the current hybrid setup. */
+    UFUNCTION(BlueprintCallable, Category="Investory|Learning|Final Exam")
+    FInvestoryExamRewardResult ClaimFinalKnowledgeExamReward();
+
+    UFUNCTION(BlueprintCallable, Category="Investory|Learning|Final Exam")
+    void ResetFinalKnowledgeExam();
+
+    UFUNCTION(BlueprintCallable, Category="Investory|Evaluation|News")
+    void RecordNewsForEvaluation(FName NewsId, FName TargetStockId, bool bBigNews,
+        float CurrentMoney, int32 CurrentHappiness, int32 CurrentKnowledge);
+
+    UFUNCTION(BlueprintCallable, Category="Investory|Evaluation|Shop")
+    void RecordShopForEvaluation(FName ItemId, float MoneyDelta, int32 HappinessDelta, int32 KnowledgeDelta,
+        float CurrentMoney, int32 CurrentHappiness, int32 CurrentKnowledge);
+
+    UFUNCTION(BlueprintCallable, Category="Investory|Evaluation|Investment")
+    void RecordPortfolioViewForEvaluation(FName StockId, int32 Shares, float UnrealizedProfitLoss,
+        float CurrentMoney, int32 CurrentHappiness, int32 CurrentKnowledge);
+
+
+    /** Read-only portfolio helper for an anytime portfolio screen. Does not consume a Market Action. */
+    UFUNCTION(BlueprintPure, Category="Investory|Portfolio")
+    FInvestoryPortfolioInsight GetPortfolioInsight(FName StockId, float CurrentPrice, float CurrentMoney,
+        int32 Knowledge, float RequiredCashReserve) const;
+
+
+    /** Preferred portfolio node: view anytime, does not consume Market Action, records the view, and unlocks concepts actually shown. */
+    UFUNCTION(BlueprintCallable, Category="Investory|Portfolio")
+    FInvestoryPortfolioInsight OpenPortfolioForLearning(FName StockId, float CurrentPrice, float CurrentMoney,
+        int32 CurrentHappiness, int32 CurrentKnowledge, float RequiredCashReserve);
+
+    /** Final result for WBP_Result. Use the Blueprint character's final values here. */
+    UFUNCTION(BlueprintCallable, Category="Investory|Evaluation")
+    FInvestoryEvaluationResult FinalizeInvestoryEvaluation(float FinalMoney, int32 FinalHappiness, int32 FinalKnowledge);
+
+    UFUNCTION(BlueprintPure, Category="Investory|Evaluation")
+    FInvestoryPlayerProgress GetEvaluationProgress() const;
+
+    /** Writes summary.csv + detailed logs to Saved/InvestoryEvaluation/<FolderLabel>. */
+    UFUNCTION(BlueprintCallable, Category="Investory|Evaluation|Export")
+    bool ExportInvestoryEvaluationCsv(FString FolderLabel, FString& OutDirectory, FText& OutMessage) const;
 
     // ---- Market-action-safe order wrappers --------------------------------
 

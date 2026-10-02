@@ -107,6 +107,31 @@ struct FInvestoryExecutionResult
 };
 
 
+
+USTRUCT(BlueprintType)
+struct FInvestoryOrderSubmissionAttempt
+{
+    GENERATED_BODY()
+
+    UPROPERTY(BlueprintReadOnly)
+    FName StockId = NAME_None;
+
+    UPROPERTY(BlueprintReadOnly)
+    EInvestoryOrderSide Side = EInvestoryOrderSide::Buy;
+
+    UPROPERTY(BlueprintReadOnly)
+    int32 Quantity = 0;
+
+    UPROPERTY(BlueprintReadOnly)
+    float SubmittedPrice = 0.0f;
+
+    UPROPERTY(BlueprintReadOnly)
+    bool bAccepted = false;
+
+    UPROPERTY(BlueprintReadOnly)
+    FText Reason;
+};
+
 USTRUCT(BlueprintType)
 struct FInvestoryStockSnapshot
 {
@@ -146,8 +171,25 @@ struct FInvestoryStockSnapshot
     FInvestoryPendingOrder PendingOrder;
 };
 
+USTRUCT(BlueprintType)
+struct FInvestoryPortfolioInsight
+{
+    GENERATED_BODY()
+
+    UPROPERTY(BlueprintReadOnly) FInvestoryStockSnapshot Snapshot;
+    UPROPERTY(BlueprintReadOnly) float SpendableCash = 0.0f;
+    UPROPERTY(BlueprintReadOnly) float SelectedPositionAllocationPercent = 0.0f;
+    UPROPERTY(BlueprintReadOnly) bool bLiquidityWarning = false;
+    UPROPERTY(BlueprintReadOnly) bool bShowAverageCost = false;
+    UPROPERTY(BlueprintReadOnly) bool bShowUnrealizedProfitLoss = false;
+    UPROPERTY(BlueprintReadOnly) bool bShowBreakEvenPrice = false;
+    UPROPERTY(BlueprintReadOnly) FText PrimaryFeedback;
+    UPROPERTY(BlueprintReadOnly) FText LearningTip;
+};
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInvestoryOrderChanged, FInvestoryPendingOrder, Order);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInvestoryOrderExecuted, FInvestoryExecutionResult, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInvestoryOrderSubmissionAttempt, FInvestoryOrderSubmissionAttempt, Attempt);
 
 UCLASS(ClassGroup=(Investory), meta=(BlueprintSpawnableComponent))
 class THESIS_API UInvestoryInvestmentComponent : public UActorComponent
@@ -164,11 +206,25 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Trading", meta=(ClampMin="0"))
     int32 DefaultPendingTurns = 1;
 
+
+    // Knowledge makes the portfolio screen progressively more informative instead of merely adding score.
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Portfolio Learning", meta=(ClampMin="0"))
+    int32 KnowledgeForAverageCost = 5;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Portfolio Learning", meta=(ClampMin="0"))
+    int32 KnowledgeForUnrealizedPL = 10;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Portfolio Learning", meta=(ClampMin="0"))
+    int32 KnowledgeForBreakEven = 15;
+
     UPROPERTY(BlueprintAssignable, Category="Investory|Trading")
     FOnInvestoryOrderChanged OnOrderChanged;
 
     UPROPERTY(BlueprintAssignable, Category="Investory|Trading")
     FOnInvestoryOrderExecuted OnOrderExecuted;
+
+    UPROPERTY(BlueprintAssignable, Category="Investory|Trading")
+    FOnInvestoryOrderSubmissionAttempt OnOrderSubmissionAttempt;
 
     UFUNCTION(BlueprintCallable, Category="Investory|Trading")
     bool PlaceBuyOrder(FName StockId, int32 Quantity, float SubmittedPrice, float AvailableCash, FText& OutReason);
@@ -232,6 +288,15 @@ public:
 
     UFUNCTION(BlueprintPure, Category="Investory|Trading")
     FInvestoryStockSnapshot GetStockSnapshot(FName StockId, float CurrentPrice) const;
+
+
+    /**
+     * Portfolio screen helper. It never changes money/shares and can be opened outside the Market Phase.
+     * RequiredCashReserve should normally be the next living-expense/rest safety amount you want the player to keep.
+     */
+    UFUNCTION(BlueprintPure, Category="Investory|Portfolio Learning")
+    FInvestoryPortfolioInsight GetPortfolioInsight(FName StockId, float CurrentPrice, float CurrentMoney,
+        int32 Knowledge, float RequiredCashReserve) const;
 
     /**
      * Safer version of AdvanceOrder for gameplay use. It validates the actual execution cost

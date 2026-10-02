@@ -14,15 +14,29 @@ bool UInvestoryInvestmentComponent::PlaceBuyOrder(
     float AvailableCash,
     FText& OutReason)
 {
+    auto BroadcastAttempt = [this, StockId, Quantity, SubmittedPrice](bool bAccepted, const FText& Reason)
+    {
+        FInvestoryOrderSubmissionAttempt Attempt;
+        Attempt.StockId = StockId;
+        Attempt.Side = EInvestoryOrderSide::Buy;
+        Attempt.Quantity = Quantity;
+        Attempt.SubmittedPrice = SubmittedPrice;
+        Attempt.bAccepted = bAccepted;
+        Attempt.Reason = Reason;
+        OnOrderSubmissionAttempt.Broadcast(Attempt);
+    };
+
     if (StockId.IsNone() || Quantity <= 0 || SubmittedPrice <= 0.0f)
     {
         OutReason = LOCTEXT("InvalidBuy", "ข้อมูลคำสั่งซื้อไม่ถูกต้อง");
+        BroadcastAttempt(false, OutReason);
         return false;
     }
 
     if (HasPendingOrder(StockId))
     {
         OutReason = LOCTEXT("PendingExists", "หุ้นนี้มีคำสั่งที่กำลังรอดำเนินการอยู่");
+        BroadcastAttempt(false, OutReason);
         return false;
     }
 
@@ -33,6 +47,7 @@ bool UInvestoryInvestmentComponent::PlaceBuyOrder(
     if (AvailableCash < RequiredCash)
     {
         OutReason = LOCTEXT("NotEnoughCash", "เงินที่ใช้ได้ไม่เพียงพอสำหรับคำสั่งซื้อนี้");
+        BroadcastAttempt(false, OutReason);
         return false;
     }
 
@@ -50,6 +65,7 @@ bool UInvestoryInvestmentComponent::PlaceBuyOrder(
     OnOrderChanged.Broadcast(Order);
 
     OutReason = LOCTEXT("BuySubmitted", "ส่งคำสั่งซื้อแล้ว");
+    BroadcastAttempt(true, OutReason);
     return true;
 }
 
@@ -59,15 +75,29 @@ bool UInvestoryInvestmentComponent::PlaceSellOrder(
     float SubmittedPrice,
     FText& OutReason)
 {
+    auto BroadcastAttempt = [this, StockId, Quantity, SubmittedPrice](bool bAccepted, const FText& Reason)
+    {
+        FInvestoryOrderSubmissionAttempt Attempt;
+        Attempt.StockId = StockId;
+        Attempt.Side = EInvestoryOrderSide::Sell;
+        Attempt.Quantity = Quantity;
+        Attempt.SubmittedPrice = SubmittedPrice;
+        Attempt.bAccepted = bAccepted;
+        Attempt.Reason = Reason;
+        OnOrderSubmissionAttempt.Broadcast(Attempt);
+    };
+
     if (StockId.IsNone() || Quantity <= 0 || SubmittedPrice <= 0.0f)
     {
         OutReason = LOCTEXT("InvalidSell", "ข้อมูลคำสั่งขายไม่ถูกต้อง");
+        BroadcastAttempt(false, OutReason);
         return false;
     }
 
     if (HasPendingOrder(StockId))
     {
         OutReason = LOCTEXT("PendingExistsSell", "หุ้นนี้มีคำสั่งที่กำลังรอดำเนินการอยู่");
+        BroadcastAttempt(false, OutReason);
         return false;
     }
 
@@ -76,6 +106,7 @@ bool UInvestoryInvestmentComponent::PlaceSellOrder(
     if (AvailableShares < Quantity)
     {
         OutReason = LOCTEXT("NotEnoughShares", "จำนวนหุ้นที่พร้อมขายไม่เพียงพอ");
+        BroadcastAttempt(false, OutReason);
         return false;
     }
 
@@ -92,6 +123,7 @@ bool UInvestoryInvestmentComponent::PlaceSellOrder(
     OnOrderChanged.Broadcast(Order);
 
     OutReason = LOCTEXT("SellSubmitted", "ส่งคำสั่งขายแล้ว");
+    BroadcastAttempt(true, OutReason);
     return true;
 }
 
@@ -264,6 +296,77 @@ FInvestoryStockSnapshot UInvestoryInvestmentComponent::GetStockSnapshot(FName St
     return Snapshot;
 }
 
+FInvestoryPortfolioInsight UInvestoryInvestmentComponent::GetPortfolioInsight(
+    FName StockId, float CurrentPrice, float CurrentMoney, int32 Knowledge, float RequiredCashReserve) const
+{
+    FInvestoryPortfolioInsight Insight;
+    Insight.Snapshot = GetStockSnapshot(StockId, CurrentPrice);
+    Insight.SpendableCash = GetAvailableCash(CurrentMoney);
+    Insight.bShowAverageCost = Knowledge >= FMath::Max(0, KnowledgeForAverageCost);
+    Insight.bShowUnrealizedProfitLoss = Knowledge >= FMath::Max(0, KnowledgeForUnrealizedPL);
+    Insight.bShowBreakEvenPrice = Knowledge >= FMath::Max(0, KnowledgeForBreakEven);
+
+    const float SelectedWealth = FMath::Max(0.0f, Insight.SpendableCash) + FMath::Max(0.0f, Insight.Snapshot.MarketValue);
+    if (SelectedWealth > KINDA_SMALL_NUMBER)
+    {
+        Insight.SelectedPositionAllocationPercent =
+            FMath::Clamp((Insight.Snapshot.MarketValue / SelectedWealth) * 100.0f, 0.0f, 100.0f);
+    }
+
+    const float SafeReserve = FMath::Max(0.0f, RequiredCashReserve);
+    Insight.bLiquidityWarning = SafeReserve > 0.0f && Insight.SpendableCash + KINDA_SMALL_NUMBER < SafeReserve;
+
+    if (Insight.Snapshot.bHasPendingOrder)
+    {
+        Insight.PrimaryFeedback = LOCTEXT("PortfolioPending", "หุ้นนี้มีคำสั่งที่กำลังรอดำเนินการ ราคาที่ได้จริงอาจต่างจากราคาตอนส่ง");
+    }
+    else if (Insight.Snapshot.Shares <= 0)
+    {
+        Insight.PrimaryFeedback = LOCTEXT("PortfolioNoPosition", "คุณยังไม่มีสถานะในหุ้นนี้ การดูพอร์ตช่วยเปรียบเทียบราคาก่อนตัดสินใจโดยไม่เสีย Market Action");
+    }
+    else if (Insight.bLiquidityWarning)
+    {
+        Insight.PrimaryFeedback = LOCTEXT("PortfolioLiquidityWarning", "เงินสดที่ใช้ได้ต่ำกว่าเงินสำรองที่แนะนำ ระวังไม่มีสภาพคล่องพอสำหรับค่าใช้จ่ายในเกม");
+    }
+    else if (Insight.bShowBreakEvenPrice && Insight.Snapshot.CurrentPrice + KINDA_SMALL_NUMBER < Insight.Snapshot.BreakEvenPrice)
+    {
+        Insight.PrimaryFeedback = LOCTEXT("PortfolioBelowBreakEven", "ราคาปัจจุบันยังต่ำกว่าจุดคุ้มทุนหลังค่าธรรมเนียม");
+    }
+    else if (Insight.bShowBreakEvenPrice && Insight.Snapshot.CurrentPrice >= Insight.Snapshot.BreakEvenPrice)
+    {
+        Insight.PrimaryFeedback = LOCTEXT("PortfolioAboveBreakEven", "ราคาปัจจุบันอยู่เหนือจุดคุ้มทุนหลังค่าธรรมเนียมแล้ว");
+    }
+    else
+    {
+        Insight.PrimaryFeedback = LOCTEXT("PortfolioBasic", "ตรวจสอบจำนวนหุ้น ราคา และเงินสดก่อนตัดสินใจซื้อหรือขาย");
+    }
+
+    if (!Insight.bShowAverageCost)
+    {
+        Insight.LearningTip = FText::Format(
+            LOCTEXT("UnlockAverageCost", "เพิ่ม Knowledge ถึง {0} เพื่อดูต้นทุนเฉลี่ยของหุ้นที่ถือ"),
+            FText::AsNumber(FMath::Max(0, KnowledgeForAverageCost)));
+    }
+    else if (!Insight.bShowUnrealizedProfitLoss)
+    {
+        Insight.LearningTip = FText::Format(
+            LOCTEXT("UnlockUnrealized", "เพิ่ม Knowledge ถึง {0} เพื่อดู Unrealized P/L และเข้าใจกำไร/ขาดทุนที่ยังไม่ขาย"),
+            FText::AsNumber(FMath::Max(0, KnowledgeForUnrealizedPL)));
+    }
+    else if (!Insight.bShowBreakEvenPrice)
+    {
+        Insight.LearningTip = FText::Format(
+            LOCTEXT("UnlockBreakEven", "เพิ่ม Knowledge ถึง {0} เพื่อดู Break-even หลังค่าธรรมเนียม"),
+            FText::AsNumber(FMath::Max(0, KnowledgeForBreakEven)));
+    }
+    else
+    {
+        Insight.LearningTip = LOCTEXT("PortfolioAllUnlocked", "ข้อมูลพอร์ตเชิงลึกถูกปลดแล้ว ใช้ Avg Cost, P/L และ Break-even ประกอบการตัดสินใจ");
+    }
+
+    return Insight;
+}
+
 FInvestoryExecutionResult UInvestoryInvestmentComponent::AdvanceOrderWithCash(
     FName StockId,
     float CurrentPrice,
@@ -322,6 +425,14 @@ FInvestoryExecutionResult UInvestoryInvestmentComponent::AdvanceOrderInternal(
     }
 
     Result = ExecuteOrder(*Order, CurrentPrice);
+
+    if (!Result.bSuccess)
+    {
+        Order->Status = EInvestoryOrderStatus::Rejected;
+        Order->ExecutedPrice = CurrentPrice;
+        OnOrderChanged.Broadcast(*Order);
+    }
+
     PendingOrders.Remove(StockId);
 
     if (Result.bSuccess)

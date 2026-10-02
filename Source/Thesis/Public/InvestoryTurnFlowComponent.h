@@ -56,10 +56,10 @@ public:
     UInvestoryTurnFlowComponent();
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Turn Flow|Income", meta=(ClampMin="0"))
-    int32 IncomeEveryTurns = 4;
+    int32 IncomeEveryTurns = 0;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Turn Flow|Income", meta=(ClampMin="0.0"))
-    float IncomeAmount = 1500.0f;
+    float IncomeAmount = 0.0f;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Turn Flow|Market", meta=(ClampMin="0"))
     int32 NormalMarketActions = 1;
