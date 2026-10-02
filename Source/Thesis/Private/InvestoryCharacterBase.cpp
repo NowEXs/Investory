@@ -562,9 +562,41 @@ FInvestoryPortfolioInsight AInvestoryCharacterBase::OpenPortfolioForLearning(
 FInvestoryEvaluationResult AInvestoryCharacterBase::FinalizeInvestoryEvaluation(
     float FinalMoney, int32 FinalHappiness, int32 FinalKnowledge)
 {
-    return EvaluationComponent
-        ? EvaluationComponent->FinalizeEvaluation(FinalMoney, FinalHappiness, FinalKnowledge)
-        : FInvestoryEvaluationResult();
+    if (!EvaluationComponent)
+    {
+        return FInvestoryEvaluationResult();
+    }
+
+    const float PortfolioMarketValue = InvestmentComponent
+        ? InvestmentComponent->GetTotalPortfolioMarketValue()
+        : 0.0f;
+
+    return EvaluationComponent->FinalizeEvaluationWithPortfolio(
+        FinalMoney, PortfolioMarketValue, FinalHappiness, FinalKnowledge);
+}
+
+void AInvestoryCharacterBase::RegisterInvestmentMarketPrice(FName StockId, float CurrentPrice)
+{
+    if (InvestmentComponent)
+    {
+        InvestmentComponent->UpdateMarketPrice(StockId, CurrentPrice);
+    }
+}
+
+void AInvestoryCharacterBase::RegisterInvestmentMarketPrices(
+    const TArray<FName>& StockIds, const TArray<float>& CurrentPrices)
+{
+    if (InvestmentComponent)
+    {
+        InvestmentComponent->UpdateMarketPrices(StockIds, CurrentPrices);
+    }
+}
+
+float AInvestoryCharacterBase::GetEstimatedNetWorth(float CurrentMoney) const
+{
+    return InvestmentComponent
+        ? InvestmentComponent->GetEstimatedNetWorth(CurrentMoney)
+        : FMath::Max(0.0f, CurrentMoney);
 }
 
 FInvestoryPlayerProgress AInvestoryCharacterBase::GetEvaluationProgress() const

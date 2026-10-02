@@ -14,6 +14,11 @@ bool UInvestoryInvestmentComponent::PlaceBuyOrder(
     float AvailableCash,
     FText& OutReason)
 {
+    if (!StockId.IsNone() && SubmittedPrice > 0.0f)
+    {
+        CacheMarketPrice(StockId, SubmittedPrice);
+    }
+
     auto BroadcastAttempt = [this, StockId, Quantity, SubmittedPrice](bool bAccepted, const FText& Reason)
     {
         FInvestoryOrderSubmissionAttempt Attempt;
@@ -75,6 +80,11 @@ bool UInvestoryInvestmentComponent::PlaceSellOrder(
     float SubmittedPrice,
     FText& OutReason)
 {
+    if (!StockId.IsNone() && SubmittedPrice > 0.0f)
+    {
+        CacheMarketPrice(StockId, SubmittedPrice);
+    }
+
     auto BroadcastAttempt = [this, StockId, Quantity, SubmittedPrice](bool bAccepted, const FText& Reason)
     {
         FInvestoryOrderSubmissionAttempt Attempt;
@@ -204,7 +214,70 @@ float UInvestoryInvestmentComponent::GetUnrealizedProfitLoss(FName StockId, floa
 
 float UInvestoryInvestmentComponent::GetMarketValue(FName StockId, float CurrentPrice) const
 {
+    CacheMarketPrice(StockId, CurrentPrice);
     return FMath::Max(0.0f, CurrentPrice) * static_cast<float>(GetOwnedShares(StockId));
+}
+
+void UInvestoryInvestmentComponent::UpdateMarketPrice(FName StockId, float CurrentPrice)
+{
+    CacheMarketPrice(StockId, CurrentPrice);
+}
+
+void UInvestoryInvestmentComponent::UpdateMarketPrices(const TArray<FName>& StockIds, const TArray<float>& CurrentPrices)
+{
+    const int32 Count = FMath::Min(StockIds.Num(), CurrentPrices.Num());
+    for (int32 Index = 0; Index < Count; ++Index)
+    {
+        CacheMarketPrice(StockIds[Index], CurrentPrices[Index]);
+    }
+}
+
+float UInvestoryInvestmentComponent::GetLastKnownPrice(FName StockId) const
+{
+    if (const float* Price = LastKnownPrices.Find(StockId))
+    {
+        return FMath::Max(0.0f, *Price);
+    }
+    return 0.0f;
+}
+
+float UInvestoryInvestmentComponent::GetTotalPortfolioMarketValue() const
+{
+    float TotalValue = 0.0f;
+
+    for (const TPair<FName, FInvestoryStockPosition>& Pair : Positions)
+    {
+        const FInvestoryStockPosition& Position = Pair.Value;
+        if (Position.Shares <= 0)
+        {
+            continue;
+        }
+
+        float Price = GetLastKnownPrice(Pair.Key);
+        if (Price <= KINDA_SMALL_NUMBER)
+        {
+            // Safe fallback so merely moving cash into an investment is not scored as losing the cash.
+            // As soon as Blueprint supplies a current price, true market value is used instead.
+            Price = Position.GetAverageCost();
+        }
+
+        TotalValue += FMath::Max(0.0f, Price) * static_cast<float>(Position.Shares);
+    }
+
+    return FMath::Max(0.0f, TotalValue);
+}
+
+float UInvestoryInvestmentComponent::GetEstimatedNetWorth(float CurrentCash) const
+{
+    return FMath::Max(0.0f, CurrentCash) + GetTotalPortfolioMarketValue();
+}
+
+void UInvestoryInvestmentComponent::CacheMarketPrice(FName StockId, float CurrentPrice) const
+{
+    if (!StockId.IsNone() && FMath::IsFinite(CurrentPrice) && CurrentPrice > 0.0f)
+    {
+        LastKnownPrices.FindOrAdd(StockId) = CurrentPrice;
+    }
 }
 
 float UInvestoryInvestmentComponent::GetReservedCash() const
@@ -381,6 +454,8 @@ FInvestoryExecutionResult UInvestoryInvestmentComponent::AdvanceOrderInternal(
     bool bValidateCash,
     float CurrentCash)
 {
+    CacheMarketPrice(StockId, CurrentPrice);
+
     FInvestoryExecutionResult Result;
     FInvestoryPendingOrder* Order = PendingOrders.Find(StockId);
     if (!Order || Order->Status != EInvestoryOrderStatus::Pending || CurrentPrice <= 0.0f)

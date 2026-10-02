@@ -261,6 +261,25 @@ public:
     UFUNCTION(BlueprintPure, Category="Investory|Trading")
     float GetMarketValue(FName StockId, float CurrentPrice) const;
 
+    /** Store the latest market price known by gameplay/UI. Useful for end-game net-worth evaluation. */
+    UFUNCTION(BlueprintCallable, Category="Investory|Trading|Market Data")
+    void UpdateMarketPrice(FName StockId, float CurrentPrice);
+
+    /** Bulk helper for Blueprint. Extra ids/prices are ignored when the arrays have different sizes. */
+    UFUNCTION(BlueprintCallable, Category="Investory|Trading|Market Data")
+    void UpdateMarketPrices(const TArray<FName>& StockIds, const TArray<float>& CurrentPrices);
+
+    UFUNCTION(BlueprintPure, Category="Investory|Trading|Market Data")
+    float GetLastKnownPrice(FName StockId) const;
+
+    /** Total current value of all owned positions using the latest known prices. Falls back to average cost when no price has been observed yet. */
+    UFUNCTION(BlueprintPure, Category="Investory|Trading|Market Data")
+    float GetTotalPortfolioMarketValue() const;
+
+    /** Cash + current portfolio value. Pending buy cash remains cash until execution; pending sell shares remain portfolio assets. */
+    UFUNCTION(BlueprintPure, Category="Investory|Trading|Market Data")
+    float GetEstimatedNetWorth(float CurrentCash) const;
+
     UFUNCTION(BlueprintPure, Category="Investory|Trading")
     float GetReservedCash() const;
 
@@ -314,6 +333,11 @@ private:
 
     float ReservedCash = 0.0f;
 
+    // Runtime-only cache. Prices are supplied by existing Blueprint/GameState flows whenever a stock is viewed,
+    // submitted or executed. It intentionally does not own the market simulation itself.
+    mutable TMap<FName, float> LastKnownPrices;
+
+    void CacheMarketPrice(FName StockId, float CurrentPrice) const;
     FInvestoryStockPosition& FindOrAddPosition(FName StockId);
     FInvestoryExecutionResult AdvanceOrderInternal(FName StockId, float CurrentPrice, bool bValidateCash, float CurrentCash);
     FInvestoryExecutionResult ExecuteOrder(FInvestoryPendingOrder& Order, float CurrentPrice);

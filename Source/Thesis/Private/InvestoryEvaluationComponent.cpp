@@ -109,6 +109,8 @@ void UInvestoryEvaluationComponent::BeginSession(float InitialMoney, int32 Initi
     Progress.InitialHappiness = InitialHappiness;
     Progress.InitialKnowledge = InitialKnowledge;
     Progress.FinalMoney = InitialMoney;
+    Progress.FinalPortfolioMarketValue = 0.0f;
+    Progress.FinalNetWorth = FMath::Max(0.0f, InitialMoney);
     Progress.FinalHappiness = InitialHappiness;
     Progress.FinalKnowledge = InitialKnowledge;
     Progress.CurrentYear = 1;
@@ -687,10 +689,19 @@ FString UInvestoryEvaluationComponent::GradeFromScore(float Score) const
 FInvestoryEvaluationResult UInvestoryEvaluationComponent::CalculateEvaluation(
     float CurrentMoney, int32 CurrentHappiness, int32 CurrentKnowledge) const
 {
+    return CalculateEvaluationWithPortfolio(CurrentMoney, 0.0f, CurrentHappiness, CurrentKnowledge);
+}
+
+FInvestoryEvaluationResult UInvestoryEvaluationComponent::CalculateEvaluationWithPortfolio(
+    float CurrentMoney, float CurrentPortfolioMarketValue, int32 CurrentHappiness, int32 CurrentKnowledge) const
+{
     FInvestoryEvaluationResult Result;
 
+    Result.PortfolioMarketValue = FMath::Max(0.0f, CurrentPortfolioMarketValue);
+    Result.NetWorth = FMath::Max(0.0f, CurrentMoney) + Result.PortfolioMarketValue;
+
     const float InitialMoney = FMath::Max(1.0f, Progress.InitialMoney);
-    const float MoneyRatio = FMath::Max(0.0f, CurrentMoney) / InitialMoney;
+    const float MoneyRatio = Result.NetWorth / InitialMoney;
     const float StartScore = FMath::Clamp(FinancialScoreAtStartingMoney, 0.0f, 100.0f);
     const float TargetRatio = FMath::Max(1.0001f, FinancialTargetMoneyMultiplier);
     const float SafeKnowledgeMax = FMath::Max(1.0f, KnowledgeScoreMax);
@@ -784,17 +795,27 @@ FInvestoryEvaluationResult UInvestoryEvaluationComponent::CalculateEvaluation(
 FInvestoryEvaluationResult UInvestoryEvaluationComponent::FinalizeEvaluation(
     float FinalMoney, int32 FinalHappiness, int32 FinalKnowledge)
 {
+    return FinalizeEvaluationWithPortfolio(FinalMoney, 0.0f, FinalHappiness, FinalKnowledge);
+}
+
+FInvestoryEvaluationResult UInvestoryEvaluationComponent::FinalizeEvaluationWithPortfolio(
+    float FinalMoney, float FinalPortfolioMarketValue, int32 FinalHappiness, int32 FinalKnowledge)
+{
     EnsureSessionStarted();
-    Progress.FinalMoney = FinalMoney;
+    Progress.FinalMoney = FMath::Max(0.0f, FinalMoney);
+    Progress.FinalPortfolioMarketValue = FMath::Max(0.0f, FinalPortfolioMarketValue);
+    Progress.FinalNetWorth = Progress.FinalMoney + Progress.FinalPortfolioMarketValue;
     Progress.FinalHappiness = FinalHappiness;
     Progress.FinalKnowledge = FinalKnowledge;
     Progress.EndTimeIso = FDateTime::UtcNow().ToIso8601();
 
     AddExperience(EInvestoryExperienceType::SessionEnded, TEXT("GameEnd"), 0, FText::GetEmpty(), NAME_None,
-        0.0f, 0, 0, true, LOCTEXT("SessionEnded", "จบการเล่น"));
-    AddSnapshot(TEXT("GameEnd"), FinalMoney, FinalHappiness, FinalKnowledge);
+        0.0f, 0, 0, true,
+        FText::Format(LOCTEXT("SessionEndedNetWorth", "จบการเล่น | Net Worth {0}"), FText::AsNumber(Progress.FinalNetWorth)));
+    AddSnapshot(TEXT("GameEnd"), Progress.FinalMoney, FinalHappiness, FinalKnowledge);
 
-    return CalculateEvaluation(FinalMoney, FinalHappiness, FinalKnowledge);
+    return CalculateEvaluationWithPortfolio(
+        Progress.FinalMoney, Progress.FinalPortfolioMarketValue, FinalHappiness, FinalKnowledge);
 }
 
 bool UInvestoryEvaluationComponent::ExportEvaluationCsv(FString FolderLabel, FString& OutDirectory, FText& OutMessage) const
@@ -820,16 +841,17 @@ bool UInvestoryEvaluationComponent::ExportEvaluationCsv(FString FolderLabel, FSt
 
     bool bAllSaved = true;
 
-    const FInvestoryEvaluationResult Scores = CalculateEvaluation(
-        Progress.FinalMoney, Progress.FinalHappiness, Progress.FinalKnowledge);
+    const FInvestoryEvaluationResult Scores = CalculateEvaluationWithPortfolio(
+        Progress.FinalMoney, Progress.FinalPortfolioMarketValue, Progress.FinalHappiness, Progress.FinalKnowledge);
 
-    FString SummaryCsv = TEXT("SessionId,StartTimeUtc,EndTimeUtc,Turn,Year,InitialMoney,FinalMoney,InitialHappiness,FinalHappiness,InitialKnowledge,FinalKnowledge,ScamAnswered,ScamWrong,ScamGood,ScamBest,FinalExamAnswered,FinalExamCorrect,FinalExamPoints,FinalExamMaxPoints,FinalExamRewardMoney,FinalExamScore,LearningConceptsExposed,PortfolioViews,MeaningfulPortfolioViews,BuySubmitted,SellSubmitted,OrdersExecuted,OrdersRejected,FeesPaid,RealizedPL,HasBought,HasSold,ExperiencedFee,PendingPriceChange,ExperiencedAverageCost,ExperiencedUnrealizedPL,ExperiencedBreakEven,ExperiencedRealizedPL,TradedAfterNews,EventChoices,NewsSeen,BigNewsSeen,ShopPurchases,BurnoutEncounters,RestCount,ForceBurnoutCount,LivingExpensePaid,LivingExpenseUnpaid,LivingExpenseTotal,FinancialScore,KnowledgeScore,ScamScore,WellbeingScore,InvestmentLearningScore,InvestmentMilestones,OverallScore,Grade\n");
-    SummaryCsv += FString::Printf(TEXT("%s,%s,%s,%d,%d,%.2f,%.2f,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%.2f,%.2f,%.2f,%.2f,%d,%d,%d,%d,%d,%d,%d,%.2f,%.2f,%s,%s,%s,%s,%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d/%d,%.2f,%s\n"),
+    FString SummaryCsv = TEXT("SessionId,StartTimeUtc,EndTimeUtc,Turn,Year,InitialMoney,FinalMoney,FinalPortfolioMarketValue,FinalNetWorth,InitialHappiness,FinalHappiness,InitialKnowledge,FinalKnowledge,ScamAnswered,ScamWrong,ScamGood,ScamBest,FinalExamAnswered,FinalExamCorrect,FinalExamPoints,FinalExamMaxPoints,FinalExamRewardMoney,FinalExamScore,LearningConceptsExposed,PortfolioViews,MeaningfulPortfolioViews,BuySubmitted,SellSubmitted,OrdersExecuted,OrdersRejected,FeesPaid,RealizedPL,HasBought,HasSold,ExperiencedFee,PendingPriceChange,ExperiencedAverageCost,ExperiencedUnrealizedPL,ExperiencedBreakEven,ExperiencedRealizedPL,TradedAfterNews,EventChoices,NewsSeen,BigNewsSeen,ShopPurchases,BurnoutEncounters,RestCount,ForceBurnoutCount,LivingExpensePaid,LivingExpenseUnpaid,LivingExpenseTotal,FinancialScore,KnowledgeScore,ScamScore,WellbeingScore,InvestmentLearningScore,InvestmentMilestones,OverallScore,Grade\n");
+    SummaryCsv += FString::Printf(TEXT("%s,%s,%s,%d,%d,%.2f,%.2f,%.2f,%.2f,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%.2f,%.2f,%.2f,%.2f,%d,%d,%d,%d,%d,%d,%d,%.2f,%.2f,%s,%s,%s,%s,%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d/%d,%.2f,%s\n"),
         *InvestoryEvaluationCsv::Escape(Progress.SessionId),
         *InvestoryEvaluationCsv::Escape(Progress.StartTimeIso),
         *InvestoryEvaluationCsv::Escape(Progress.EndTimeIso),
         Progress.CurrentTurn, Progress.CurrentYear,
         Progress.InitialMoney, Progress.FinalMoney,
+        Scores.PortfolioMarketValue, Scores.NetWorth,
         Progress.InitialHappiness, Progress.FinalHappiness,
         Progress.InitialKnowledge, Progress.FinalKnowledge,
         Progress.ScamAnswered, Progress.ScamWrong, Progress.ScamGood, Progress.ScamBest,

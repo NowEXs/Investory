@@ -199,6 +199,8 @@ struct FInvestoryPlayerProgress
     UPROPERTY(BlueprintReadOnly, Category="Status") int32 InitialHappiness = 0;
     UPROPERTY(BlueprintReadOnly, Category="Status") int32 InitialKnowledge = 0;
     UPROPERTY(BlueprintReadOnly, Category="Status") float FinalMoney = 0.0f;
+    UPROPERTY(BlueprintReadOnly, Category="Status") float FinalPortfolioMarketValue = 0.0f;
+    UPROPERTY(BlueprintReadOnly, Category="Status") float FinalNetWorth = 0.0f;
     UPROPERTY(BlueprintReadOnly, Category="Status") int32 FinalHappiness = 0;
     UPROPERTY(BlueprintReadOnly, Category="Status") int32 FinalKnowledge = 0;
 
@@ -250,6 +252,8 @@ struct FInvestoryEvaluationResult
     GENERATED_BODY()
 
     UPROPERTY(BlueprintReadOnly) float FinancialScore = 0.0f;
+    UPROPERTY(BlueprintReadOnly) float PortfolioMarketValue = 0.0f;
+    UPROPERTY(BlueprintReadOnly) float NetWorth = 0.0f;
     UPROPERTY(BlueprintReadOnly) float KnowledgeScore = 0.0f;
     UPROPERTY(BlueprintReadOnly) float ScamKnowledgeScore = 0.0f;
     UPROPERTY(BlueprintReadOnly) float FinalExamScore = 0.0f;
@@ -329,10 +333,10 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Evaluation|Grade", meta=(ClampMin="0.0", ClampMax="100.0"))
     float GradeDThreshold = 40.0f;
     
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Evaluation|Status")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Evaluation|Status", meta=(ClampMin="1.0"))
     float KnowledgeScoreMax = 30.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Evaluation|Status")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Evaluation|Status", meta=(ClampMin="1.0"))
     float HappinessScoreMax = 30.0f;
 
     UPROPERTY(BlueprintReadOnly, Category="Investory|Evaluation")
@@ -433,8 +437,17 @@ public:
     UFUNCTION(BlueprintCallable, Category="Investory|Evaluation")
     FInvestoryEvaluationResult FinalizeEvaluation(float FinalMoney, int32 FinalHappiness, int32 FinalKnowledge);
 
+    /** Net-worth-aware finalization. Prefer this when portfolio market value is available. */
+    UFUNCTION(BlueprintCallable, Category="Investory|Evaluation")
+    FInvestoryEvaluationResult FinalizeEvaluationWithPortfolio(float FinalMoney, float FinalPortfolioMarketValue,
+        int32 FinalHappiness, int32 FinalKnowledge);
+
     UFUNCTION(BlueprintPure, Category="Investory|Evaluation")
     FInvestoryEvaluationResult CalculateEvaluation(float CurrentMoney, int32 CurrentHappiness, int32 CurrentKnowledge) const;
+
+    UFUNCTION(BlueprintPure, Category="Investory|Evaluation")
+    FInvestoryEvaluationResult CalculateEvaluationWithPortfolio(float CurrentMoney, float CurrentPortfolioMarketValue,
+        int32 CurrentHappiness, int32 CurrentKnowledge) const;
 
     UFUNCTION(BlueprintPure, Category="Investory|Evaluation")
     FInvestoryPlayerProgress GetProgress() const { return Progress; }

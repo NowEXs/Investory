@@ -269,9 +269,20 @@ public:
     FInvestoryPortfolioInsight OpenPortfolioForLearning(FName StockId, float CurrentPrice, float CurrentMoney,
         int32 CurrentHappiness, int32 CurrentKnowledge, float RequiredCashReserve);
 
-    /** Final result for WBP_Result. Use the Blueprint character's final values here. */
+    /** Final result for WBP_Result. The existing node now includes the InvestmentComponent portfolio in Net Worth automatically. */
     UFUNCTION(BlueprintCallable, Category="Investory|Evaluation")
     FInvestoryEvaluationResult FinalizeInvestoryEvaluation(float FinalMoney, int32 FinalHappiness, int32 FinalKnowledge);
+
+    /** Optional market-price sync for News/GameState. Call whenever a stock price changes so end-game Net Worth uses the freshest price. */
+    UFUNCTION(BlueprintCallable, Category="Investory|Trading|Market Data")
+    void RegisterInvestmentMarketPrice(FName StockId, float CurrentPrice);
+
+    /** Generic multi-stock version; pair StockIds and CurrentPrices by index. */
+    UFUNCTION(BlueprintCallable, Category="Investory|Trading|Market Data")
+    void RegisterInvestmentMarketPrices(const TArray<FName>& StockIds, const TArray<float>& CurrentPrices);
+
+    UFUNCTION(BlueprintPure, Category="Investory|Trading|Market Data")
+    float GetEstimatedNetWorth(float CurrentMoney) const;
 
     UFUNCTION(BlueprintPure, Category="Investory|Evaluation")
     FInvestoryPlayerProgress GetEvaluationProgress() const;
