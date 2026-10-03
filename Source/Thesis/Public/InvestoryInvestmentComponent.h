@@ -161,6 +161,14 @@ struct FInvestoryStockSnapshot
     UPROPERTY(BlueprintReadOnly)
     float UnrealizedProfitLossPercent = 0.0f;
 
+    /** Cumulative profit/loss from shares that have already been sold. Fees are included. */
+    UPROPERTY(BlueprintReadOnly)
+    float RealizedProfitLoss = 0.0f;
+
+    /** Realized P/L + current unrealized P/L for this stock. */
+    UPROPERTY(BlueprintReadOnly)
+    float TotalProfitLoss = 0.0f;
+
     UPROPERTY(BlueprintReadOnly)
     float BreakEvenPrice = 0.0f;
 

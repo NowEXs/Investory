@@ -357,9 +357,12 @@ FInvestoryStockSnapshot UInvestoryInvestmentComponent::GetStockSnapshot(FName St
     Snapshot.CurrentPrice = FMath::Max(0.0f, CurrentPrice);
     Snapshot.MarketValue = GetMarketValue(StockId, CurrentPrice);
     Snapshot.UnrealizedProfitLoss = GetUnrealizedProfitLoss(StockId, CurrentPrice);
-    Snapshot.BreakEvenPrice = GetBreakEvenPrice(StockId);
 
     const FInvestoryStockPosition Position = GetPosition(StockId);
+    Snapshot.RealizedProfitLoss = Position.RealizedProfitLoss;
+    Snapshot.TotalProfitLoss = Snapshot.RealizedProfitLoss + Snapshot.UnrealizedProfitLoss;
+    Snapshot.BreakEvenPrice = GetBreakEvenPrice(StockId);
+
     if (Position.TotalCost > KINDA_SMALL_NUMBER)
     {
         Snapshot.UnrealizedProfitLossPercent = (Snapshot.UnrealizedProfitLoss / Position.TotalCost) * 100.0f;
