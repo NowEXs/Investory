@@ -110,41 +110,86 @@ FInvestoryScamLearningFeedback UInvestoryLearningComponent::GetScamFeedbackFromT
         }
 
         Result.bFound = true;
+        Result.bCountsAsScam = Row->bCountsAsScam;
         Result.Concept = Row->Concept;
+        Result.SituationRiskExplanation = Row->SituationRiskExplanation;
         Result.LearningPoint = Row->LearningPoint;
 
         switch (Quality)
         {
         case EInvestoryScamAnswerQuality::Best:
+            Result.ResultLabel = Row->BestResultLabel;
             Result.Explanation = Row->BestExplanation;
             Result.WarningSign = Row->BestWarningSign;
             break;
         case EInvestoryScamAnswerQuality::Good:
+            Result.ResultLabel = Row->GoodResultLabel;
             Result.Explanation = Row->GoodExplanation;
             Result.WarningSign = Row->GoodWarningSign;
             break;
         default:
+            Result.ResultLabel = Row->WrongResultLabel;
             Result.Explanation = Row->WrongExplanation;
             Result.WarningSign = Row->WrongWarningSign;
             break;
+        }
+
+        // Keep old DataTables backward-compatible: blank custom labels fall back to sensible defaults.
+        if (Result.ResultLabel.IsEmpty())
+        {
+            if (Row->bCountsAsScam)
+            {
+                switch (Quality)
+                {
+                case EInvestoryScamAnswerQuality::Best:
+                    Result.ResultLabel = LOCTEXT("ScamTableBestLabel", "เลือกได้เหมาะสมที่สุด");
+                    break;
+                case EInvestoryScamAnswerQuality::Good:
+                    Result.ResultLabel = LOCTEXT("ScamTableGoodLabel", "เป็นทางเลือกที่พอใช้ แต่ยังมีความเสี่ยง");
+                    break;
+                default:
+                    Result.ResultLabel = LOCTEXT("ScamTableWrongLabel", "ทางเลือกนี้มีความเสี่ยงสูง");
+                    break;
+                }
+            }
+            else
+            {
+                switch (Quality)
+                {
+                case EInvestoryScamAnswerQuality::Best:
+                    Result.ResultLabel = LOCTEXT("OpportunityBestLabel", "รับโอกาสได้อย่างเหมาะสม");
+                    break;
+                case EInvestoryScamAnswerQuality::Good:
+                    Result.ResultLabel = LOCTEXT("OpportunityGoodLabel", "ตรวจสอบได้ดี");
+                    break;
+                default:
+                    Result.ResultLabel = LOCTEXT("OpportunityWrongLabel", "พลาดโอกาสนี้ไป");
+                    break;
+                }
+            }
         }
         return Result;
     }
 
     // Generic fallback so every Scam question still gives useful feedback even before its dedicated row is authored.
     Result.bFound = true;
+    Result.bCountsAsScam = true;
     Result.Concept = EInvestoryLearningConcept::General;
+    Result.SituationRiskExplanation = LOCTEXT("ScamGenericRiskExplanation", "เหตุการณ์นี้มีความเสี่ยง เพราะผู้ส่งพยายามให้คุณตัดสินใจหรือเปิดเผยข้อมูลก่อนที่คุณจะยืนยันตัวตนและแหล่งที่มาได้ หากเป็นผู้ไม่หวังดี ข้อมูลหรือการเข้าถึงที่ให้ไปอาจถูกนำไปใช้ยึดบัญชีหรือสร้างความเสียหายต่อเงินและข้อมูลส่วนตัวได้");
     Result.WarningSign = LOCTEXT("ScamGenericWarning", "สัญญาณเตือน: ความเร่งด่วน การขอข้อมูลสำคัญ หรือช่องทางที่ยืนยันตัวตนไม่ได้");
     Result.LearningPoint = LOCTEXT("ScamGenericLearning", "หยุด ตรวจสอบแหล่งที่มาผ่านช่องทางทางการ และอย่าเปิดเผยข้อมูลสำคัญเพราะแรงกดดัน");
     switch (Quality)
     {
     case EInvestoryScamAnswerQuality::Best:
+        Result.ResultLabel = LOCTEXT("ScamGenericBestLabel", "เลือกได้เหมาะสมที่สุด");
         Result.Explanation = LOCTEXT("ScamGenericBest", "ทางเลือกนี้ลดความเสี่ยงได้ดี เพราะให้ความสำคัญกับการตรวจสอบก่อนดำเนินการ");
         break;
     case EInvestoryScamAnswerQuality::Good:
+        Result.ResultLabel = LOCTEXT("ScamGenericGoodLabel", "เป็นทางเลือกที่พอใช้ แต่ยังมีความเสี่ยง");
         Result.Explanation = LOCTEXT("ScamGenericGood", "ทางเลือกนี้ช่วยลดความเสี่ยงบางส่วน แต่ยังควรยืนยันข้อมูลผ่านช่องทางทางการให้ชัดเจน");
         break;
     default:
+        Result.ResultLabel = LOCTEXT("ScamGenericWrongLabel", "ทางเลือกนี้มีความเสี่ยงสูง");
         Result.Explanation = LOCTEXT("ScamGenericWrong", "ทางเลือกนี้เปิดโอกาสให้มิจฉาชีพใช้แรงกดดันหรือข้อมูลปลอมเพื่อให้คุณตัดสินใจเร็วเกินไป");
         break;
     }

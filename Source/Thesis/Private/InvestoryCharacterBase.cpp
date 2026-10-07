@@ -379,11 +379,19 @@ FInvestoryScamFeedback AInvestoryCharacterBase::RecordScamAnswerWithLearningForE
             OutLearningFeedback.LearningPoint.IsEmpty() ? OutLearningFeedback.Explanation : OutLearningFeedback.LearningPoint);
     }
 
-    return EvaluationComponent
-        ? EvaluationComponent->RecordScamAnswerDetailed(
+    FInvestoryScamFeedback Feedback;
+
+    if (!EvaluationComponent)
+    {
+        return Feedback;
+    }
+
+    if (OutLearningFeedback.bCountsAsScam)
+    {
+        Feedback = EvaluationComponent->RecordScamAnswerDetailed(
             QuestionId,
             ChoiceIndex,
-            MoveTemp(ChoiceLabel),
+            ChoiceLabel,
             Quality,
             OutLearningFeedback.Explanation,
             OutLearningFeedback.WarningSign,
@@ -392,8 +400,39 @@ FInvestoryScamFeedback AInvestoryCharacterBase::RecordScamAnswerWithLearningForE
             KnowledgeDelta,
             CurrentMoney,
             CurrentHappiness,
-            CurrentKnowledge)
-        : FInvestoryScamFeedback();
+            CurrentKnowledge);
+    }
+    else
+    {
+        // Legitimate opportunities reuse WBP_Scam's 3-choice feedback UI, but they must not
+        // increase ScamAnswered or change ScamKnowledgeScore.
+        EvaluationComponent->RecordEventChoice(
+            QuestionId,
+            ChoiceIndex,
+            ChoiceLabel,
+            MoneyDelta,
+            HappinessDelta,
+            KnowledgeDelta,
+            CurrentMoney,
+            CurrentHappiness,
+            CurrentKnowledge);
+
+        Feedback.Quality = Quality;
+        Feedback.Explanation = OutLearningFeedback.Explanation;
+        Feedback.WarningSign = OutLearningFeedback.WarningSign;
+        Feedback.MoneyDelta = MoneyDelta;
+        Feedback.HappinessDelta = HappinessDelta;
+        Feedback.KnowledgeDelta = KnowledgeDelta;
+    }
+
+    // The feedback table may override labels so non-scam events do not say
+    // "ทางเลือกนี้มีความเสี่ยงสูง" when the player merely missed a legitimate opportunity.
+    if (!OutLearningFeedback.ResultLabel.IsEmpty())
+    {
+        Feedback.ResultLabel = OutLearningFeedback.ResultLabel;
+    }
+
+    return Feedback;
 }
 
 FInvestoryKnowledgeExamFeedback AInvestoryCharacterBase::RecordKnowledgeExamAnswerForEvaluation(

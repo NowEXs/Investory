@@ -70,6 +70,18 @@ struct FInvestoryScamFeedbackRow : public FTableRowBase
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite) FText QuestionTitle;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) EInvestoryLearningConcept Concept = EInvestoryLearningConcept::ScamUrgency;
+
+    /** True for actual scam/cyber-risk questions. False for legitimate opportunities that reuse the same choice/feedback UI. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) bool bCountsAsScam = true;
+
+    /** Explains whether the situation itself is dangerous/safe and why. This is independent of which answer the player picked. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) FText SituationRiskExplanation;
+
+    /** Optional per-quality labels. When empty, the code falls back to the original Scam labels. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) FText WrongResultLabel;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) FText GoodResultLabel;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite) FText BestResultLabel;
+
     UPROPERTY(EditAnywhere, BlueprintReadWrite) FText WrongExplanation;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) FText WrongWarningSign;
     UPROPERTY(EditAnywhere, BlueprintReadWrite) FText GoodExplanation;
@@ -85,7 +97,10 @@ struct FInvestoryScamLearningFeedback
     GENERATED_BODY()
 
     UPROPERTY(BlueprintReadOnly) bool bFound = false;
+    UPROPERTY(BlueprintReadOnly) bool bCountsAsScam = true;
     UPROPERTY(BlueprintReadOnly) EInvestoryLearningConcept Concept = EInvestoryLearningConcept::General;
+    UPROPERTY(BlueprintReadOnly) FText SituationRiskExplanation;
+    UPROPERTY(BlueprintReadOnly) FText ResultLabel;
     UPROPERTY(BlueprintReadOnly) FText Explanation;
     UPROPERTY(BlueprintReadOnly) FText WarningSign;
     UPROPERTY(BlueprintReadOnly) FText LearningPoint;
