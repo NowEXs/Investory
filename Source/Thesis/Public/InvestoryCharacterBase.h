@@ -129,6 +129,16 @@ public:
     /** Opens the post-tile market phase. Normal tile = 1 action, Investment tile = bonus actions. */
     UFUNCTION(BlueprintCallable, Category="Investory|Turn Flow")
     int32 OpenMarketPhase(bool bInvestmentTile);
+    
+    UFUNCTION(BlueprintCallable, Category = "Investory|Market")
+    void CalculateFluctuatedPrices(
+        const TArray<FName>& StockIds,
+        const TArray<float>& CurrentPrices,
+        TArray<float>& NewPrices,
+        float MinChangePercent = -0.02f,
+        float MaxChangePercent = 0.02f,
+        float MinimumPrice = 1.0f
+    );
 
     UFUNCTION(BlueprintCallable, Category="Investory|Turn Flow")
     void EndGameplayTurn();

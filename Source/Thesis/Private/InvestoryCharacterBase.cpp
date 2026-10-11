@@ -710,4 +710,45 @@ bool AInvestoryCharacterBase::PlaceSellOrderForTurn(
     return true;
 }
 
+void AInvestoryCharacterBase::CalculateFluctuatedPrices(
+    const TArray<FName>& StockIds,
+    const TArray<float>& CurrentPrices,
+    TArray<float>& NewPrices,
+    float MinChangePercent,
+    float MaxChangePercent,
+    float MinimumPrice)
+{
+    NewPrices.Reset();
+
+    const int32 Count = FMath::Min(
+        StockIds.Num(),
+        CurrentPrices.Num()
+    );
+
+    for (int32 Index = 0; Index < Count; ++Index)
+    {
+        const float CurrentPrice = CurrentPrices[Index];
+
+        if (CurrentPrice <= 0.0f)
+        {
+            NewPrices.Add(MinimumPrice);
+            continue;
+        }
+
+        const float ChangePercent = FMath::FRandRange(
+            MinChangePercent,
+            MaxChangePercent
+        );
+
+        const float NewPrice = FMath::Max(
+            MinimumPrice,
+            CurrentPrice * (1.0f + ChangePercent)
+        );
+
+        NewPrices.Add(
+            FMath::RoundToFloat(NewPrice * 100.0f) / 100.0f
+        );
+    }
+}
+
 #undef LOCTEXT_NAMESPACE
