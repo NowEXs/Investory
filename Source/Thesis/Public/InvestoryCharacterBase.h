@@ -126,6 +126,16 @@ public:
     UFUNCTION(BlueprintCallable, Category="Investory|Turn Flow")
     void MarkResolvingBoard();
 
+    /**
+     * Call from BP_TopDownCharacter's "Finish Tile Resolution", after tile feedback.
+     * True only every 3 successfully completed moves (configurable), OR any
+     * investment tile. Either opening resets the counter. Rest does not count.
+     * When true, Blueprint creates WBP_FInishTile; when false, do NOT create it.
+     * The component ends no-market turns automatically.
+     */
+    UFUNCTION(BlueprintCallable, Category="Investory|Turn Flow|Market Event")
+    bool TryShowMarketOpeningEvent(bool bInvestmentTile, int32& OutAvailableActions);
+
     /** Opens the post-tile market phase. Normal tile = 1 action, Investment tile = bonus actions. */
     UFUNCTION(BlueprintCallable, Category="Investory|Turn Flow")
     int32 OpenMarketPhase(bool bInvestmentTile);

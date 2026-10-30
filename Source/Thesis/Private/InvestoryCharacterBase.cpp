@@ -56,6 +56,12 @@ void AInvestoryCharacterBase::MarkResolvingBoard()
     }
 }
 
+bool AInvestoryCharacterBase::TryShowMarketOpeningEvent(bool bInvestmentTile, int32& OutAvailableActions)
+{
+    OutAvailableActions = 0;
+    return TurnFlowComponent && TurnFlowComponent->TryShowMarketOpeningEvent(bInvestmentTile, OutAvailableActions);
+}
+
 int32 AInvestoryCharacterBase::OpenMarketPhase(bool bInvestmentTile)
 {
     return TurnFlowComponent ? TurnFlowComponent->OpenMarketPhase(bInvestmentTile) : 0;
