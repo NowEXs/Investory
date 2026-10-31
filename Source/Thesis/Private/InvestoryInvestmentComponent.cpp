@@ -201,6 +201,16 @@ int32 UInvestoryInvestmentComponent::GetOwnedShares(FName StockId) const
     return GetPosition(StockId).Shares;
 }
 
+int32 UInvestoryInvestmentComponent::GetTotalOwnedShares() const
+{
+    int32 TotalShares = 0;
+    for (const TPair<FName, FInvestoryStockPosition>& Pair : Positions)
+    {
+        TotalShares += FMath::Max(0, Pair.Value.Shares);
+    }
+    return TotalShares;
+}
+
 float UInvestoryInvestmentComponent::GetAverageCost(FName StockId) const
 {
     return GetPosition(StockId).GetAverageCost();

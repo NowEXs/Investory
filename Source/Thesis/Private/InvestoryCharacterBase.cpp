@@ -313,6 +313,9 @@ bool AInvestoryCharacterBase::CanRollNormally() const
 
 void AInvestoryCharacterBase::BeginEvaluationSession(float InitialMoney, int32 InitialHappiness, int32 InitialKnowledge, FString SessionLabel)
 {
+    bInvestmentReminderShownYear3 = false;
+    bInvestmentReminderShownYear4 = false;
+
     if (LearningComponent)
     {
         LearningComponent->ResetLearningProgress();
@@ -330,6 +333,81 @@ void AInvestoryCharacterBase::SetEvaluationYear(int32 Year)
         const int32 Turn = TurnFlowComponent ? TurnFlowComponent->GetTurnNumber() : EvaluationComponent->GetProgress().CurrentTurn;
         EvaluationComponent->SetTurnContext(Turn, Year);
     }
+}
+
+bool AInvestoryCharacterBase::TryGetLateGameInvestmentReminder(int32 GameYear,
+    FText& OutTitle, FText& OutMessage, int32& OutSharesHeld)
+{
+    OutTitle = FText::GetEmpty();
+    OutMessage = FText::GetEmpty();
+    OutSharesHeld = 0;
+
+    if (!InvestmentComponent || !EvaluationComponent || (GameYear != 3 && GameYear != 4))
+    {
+        return false;
+    }
+
+    // No popup when the player has no stock positions left.
+    // Pending sales still count as held stock until their actual execution.
+    OutSharesHeld = InvestmentComponent->GetTotalOwnedShares();
+    if (OutSharesHeld <= 0)
+    {
+        return false;
+    }
+
+    bool& bShown = GameYear == 3 ? bInvestmentReminderShownYear3 : bInvestmentReminderShownYear4;
+    if (bShown)
+    {
+        return false;
+    }
+
+    // Keep sell submissions distinct from executed sales.
+    const bool bHasSoldSuccessfully = EvaluationComponent->GetProgress().bHasSoldStock;
+    bool bHasPendingSell = false;
+    for (const FName& StockId : InvestmentComponent->GetPendingStockIds())
+    {
+        FInvestoryPendingOrder PendingOrder;
+        if (InvestmentComponent->GetPendingOrder(StockId, PendingOrder) &&
+            PendingOrder.Status == EInvestoryOrderStatus::Pending &&
+            PendingOrder.Side == EInvestoryOrderSide::Sell)
+        {
+            bHasPendingSell = true;
+            break;
+        }
+    }
+
+    OutTitle = GameYear == 3
+        ? LOCTEXT("InvestmentReminderYear3Title", "ก่อนเข้าสู่ช่วงท้ายเกม")
+        : LOCTEXT("InvestmentReminderYear4Title", "เข้าสู่รอบสุดท้ายแล้ว");
+
+    const FText YearMessage = GameYear == 3
+        ? LOCTEXT("InvestmentReminderYear3Intro", "คุณเข้าสู่รอบที่ 3/4 แล้ว")
+        : LOCTEXT("InvestmentReminderYear4Intro", "คุณเข้าสู่รอบที่ 4/4 ซึ่งเป็นรอบสุดท้ายแล้ว");
+
+    FText Advice;
+    if (bHasPendingSell)
+    {
+        Advice = LOCTEXT("InvestmentReminderPendingSell",
+            "คุณยังถือหุ้นอยู่ {0} หุ้น และมีคำสั่งขายที่รอดำเนินการอยู่ ตรวจสอบสถานะคำสั่งและพอร์ตอีกครั้งก่อนจบเกม เพราะการส่งคำสั่งขายยังไม่เท่ากับขายสำเร็จ");
+    }
+    else if (!bHasSoldSuccessfully)
+    {
+        Advice = LOCTEXT("InvestmentReminderNeverSold",
+            "คุณยังถือหุ้นอยู่ {0} หุ้น และยังไม่เคยขายหุ้นสำเร็จ ลองพิจารณาขายบางส่วนเมื่อมีโอกาสเปิดตลาด เพื่อเรียนรู้กำไรหรือขาดทุนจากการขายจริง ทั้งนี้คุณไม่จำเป็นต้องขายหุ้นทั้งหมด");
+    }
+    else
+    {
+        Advice = LOCTEXT("InvestmentReminderStillHolding",
+            "คุณยังถือหุ้นอยู่ {0} หุ้น แม้จะเคยขายหุ้นแล้ว ลองตรวจสอบมูลค่าพอร์ตและพิจารณาว่าจะถือต่อหรือขายบางส่วนก่อนจบเกม");
+    }
+
+    OutMessage = FText::Format(
+        LOCTEXT("InvestmentReminderCombined", "{0}\n\n{1}"),
+        YearMessage, FText::Format(Advice, FText::AsNumber(OutSharesHeld)));
+
+    // Mark only when a reminder is actually returned. Multiple BP calls in one year won't duplicate it.
+    bShown = true;
+    return true;
 }
 
 void AInvestoryCharacterBase::RecordEventChoiceForEvaluation(FName EventId, int32 ChoiceIndex, FText ChoiceLabel,

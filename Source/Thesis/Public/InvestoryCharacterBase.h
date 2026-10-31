@@ -201,6 +201,17 @@ public:
     UFUNCTION(BlueprintCallable, Category="Investory|Evaluation")
     void SetEvaluationYear(int32 Year);
 
+    /**
+     * Call after SetEvaluationYear(3) or SetEvaluationYear(4), once per year transition.
+     * True only when there are still owned shares and this year's reminder has not shown.
+     * Does not sell shares, change money, advance turns, or open Market Phase.
+     * On True, Blueprint should show a non-blocking popup or toast using OutTitle/OutMessage.
+     * 0 completed laps = Year 1, 2 completed laps = Year 3, 3 completed laps = Year 4.
+     */
+    UFUNCTION(BlueprintCallable, Category="Investory|Trading|Endgame Reminder")
+    bool TryGetLateGameInvestmentReminder(int32 GameYear, FText& OutTitle,
+        FText& OutMessage, int32& OutSharesHeld);
+
     UFUNCTION(BlueprintCallable, Category="Investory|Evaluation|Event")
     void RecordEventChoiceForEvaluation(FName EventId, int32 ChoiceIndex, FText ChoiceLabel,
         float MoneyDelta, int32 HappinessDelta, int32 KnowledgeDelta,
@@ -311,6 +322,15 @@ public:
     UFUNCTION(BlueprintCallable, Category="Investory|Evaluation|Export")
     bool ExportInvestoryEvaluationCsv(FString FolderLabel, FString& OutDirectory, FText& OutMessage) const;
 
+private:
+    /** Once per year per gameplay session. Reset when BeginEvaluationSession starts. */
+    UPROPERTY(Transient)
+    bool bInvestmentReminderShownYear3 = false;
+
+    UPROPERTY(Transient)
+    bool bInvestmentReminderShownYear4 = false;
+
+public:
     // ---- Market-action-safe order wrappers --------------------------------
 
     /**

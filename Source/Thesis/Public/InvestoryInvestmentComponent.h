@@ -260,6 +260,10 @@ public:
     UFUNCTION(BlueprintPure, Category="Investory|Trading")
     int32 GetOwnedShares(FName StockId) const;
 
+    /** Total shares still owned across every stock. Pending sell orders still count until execution. */
+    UFUNCTION(BlueprintPure, Category="Investory|Trading")
+    int32 GetTotalOwnedShares() const;
+
     UFUNCTION(BlueprintPure, Category="Investory|Trading")
     float GetAverageCost(FName StockId) const;
 
