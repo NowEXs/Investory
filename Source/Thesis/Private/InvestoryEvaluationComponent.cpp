@@ -701,7 +701,9 @@ FInvestoryEvaluationResult UInvestoryEvaluationComponent::CalculateEvaluationWit
     Result.NetWorth = FMath::Max(0.0f, CurrentMoney) + Result.PortfolioMarketValue;
 
     const float InitialMoney = FMath::Max(1.0f, Progress.InitialMoney);
-    const float MoneyRatio = Result.NetWorth / InitialMoney;
+    // Thesis 3.5.2 Financial score uses ending CASH, not unsold portfolio value.
+    // PortfolioMarketValue and NetWorth remain available as separate result statistics.
+    const float MoneyRatio = FMath::Max(0.0f, CurrentMoney) / InitialMoney;
     const float StartScore = FMath::Clamp(FinancialScoreAtStartingMoney, 0.0f, 100.0f);
     const float TargetRatio = FMath::Max(1.0001f, FinancialTargetMoneyMultiplier);
     const float SafeKnowledgeMax = FMath::Max(1.0f, KnowledgeScoreMax);

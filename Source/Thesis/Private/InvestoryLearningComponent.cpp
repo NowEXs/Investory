@@ -201,6 +201,14 @@ int32 UInvestoryLearningComponent::StartFinalExam(UDataTable* QuestionTable, int
 {
     ResetFinalExam();
 
+    if (CurrentKnowledge < FMath::Max(0, MinimumKnowledgeToStartExam))
+    {
+        OutMessage = FText::Format(
+            LOCTEXT("ExamNotEnoughKnowledge", "ต้องมีค่าความรู้ตั้งแต่ {0} จึงเข้าทำแบบประเมินได้"),
+            FText::AsNumber(FMath::Max(0, MinimumKnowledgeToStartExam)));
+        return 0;
+    }
+
     if (!QuestionTable || QuestionTable->GetRowStruct() != FInvestoryKnowledgeQuestionRow::StaticStruct())
     {
         OutMessage = LOCTEXT("InvalidExamTable", "DataTable ข้อสอบไม่ถูกต้องหรือใช้ Row Struct ผิดประเภท");
@@ -419,15 +427,26 @@ FInvestoryExamRewardResult UInvestoryLearningComponent::ClaimExamReward()
         return Result;
     }
 
-    const float HighThreshold = FMath::Clamp(ExamHighRewardThreshold, 0.0f, 100.0f);
-    const float MidThreshold = FMath::Clamp(ExamMidRewardThreshold, 0.0f, HighThreshold);
-    if (State.Percent >= HighThreshold)
+    if (bRequirePerfectAnswersForReward)
     {
-        Result.MoneyReward = FMath::Max(0.0f, ExamHighMoneyReward);
+        // Compare actual answers, not a rounded percentage. A full score cannot be faked by rounding.
+        if (State.TotalQuestions > 0 && State.CorrectAnswers == State.TotalQuestions)
+        {
+            Result.MoneyReward = FMath::Max(0.0f, ExamHighMoneyReward);
+        }
     }
-    else if (State.Percent >= MidThreshold)
+    else
     {
-        Result.MoneyReward = FMath::Max(0.0f, ExamMidMoneyReward);
+        const float HighThreshold = FMath::Clamp(ExamHighRewardThreshold, 0.0f, 100.0f);
+        const float MidThreshold = FMath::Clamp(ExamMidRewardThreshold, 0.0f, HighThreshold);
+        if (State.Percent >= HighThreshold)
+        {
+            Result.MoneyReward = FMath::Max(0.0f, ExamHighMoneyReward);
+        }
+        else if (State.Percent >= MidThreshold)
+        {
+            Result.MoneyReward = FMath::Max(0.0f, ExamMidMoneyReward);
+        }
     }
 
     bExamRewardClaimed = true;

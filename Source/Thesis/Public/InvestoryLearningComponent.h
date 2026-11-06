@@ -197,12 +197,21 @@ class THESIS_API UInvestoryLearningComponent : public UActorComponent
 public:
     UInvestoryLearningComponent();
 
+    // Thesis 3.5.1: exam is accessible ONLY when Knowledge is greater than 30.
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Learning|Final Exam", meta=(ClampMin="0"))
-    int32 KnowledgeForExamHint = 10;
+    int32 MinimumKnowledgeToStartExam = 31;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Learning|Final Exam", meta=(ClampMin="0"))
-    int32 KnowledgeForExamEliminateChoice = 20;
+    int32 KnowledgeForExamHint = 15;
 
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Learning|Final Exam", meta=(ClampMin="0"))
+    int32 KnowledgeForExamEliminateChoice = 30;
+
+
+    // Thesis: a knowledge grant is paid only if every selected question is answered correctly.
+    // Keep legacy 60/80 thresholds as an optional compatibility mode for existing Blueprint assets.
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Learning|Final Exam Reward")
+    bool bRequirePerfectAnswersForReward = true;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Learning|Final Exam Reward", meta=(ClampMin="0.0", ClampMax="100.0"))
     float ExamHighRewardThreshold = 80.0f;

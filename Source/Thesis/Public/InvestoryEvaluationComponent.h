@@ -437,7 +437,7 @@ public:
     UFUNCTION(BlueprintCallable, Category="Investory|Evaluation")
     FInvestoryEvaluationResult FinalizeEvaluation(float FinalMoney, int32 FinalHappiness, int32 FinalKnowledge);
 
-    /** Net-worth-aware finalization. Prefer this when portfolio market value is available. */
+    /** Finalization with separate portfolio display stats; the financial SCORE uses cash only (thesis 3.5.2). */
     UFUNCTION(BlueprintCallable, Category="Investory|Evaluation")
     FInvestoryEvaluationResult FinalizeEvaluationWithPortfolio(float FinalMoney, float FinalPortfolioMarketValue,
         int32 FinalHappiness, int32 FinalKnowledge);

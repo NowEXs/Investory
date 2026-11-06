@@ -96,7 +96,7 @@ public:
     int32 ExtraHappinessCostWhenForcingBurnout = 5;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Turn Rules", meta=(ClampMin="0"))
-    int32 LivingExpenseEveryRolls = 4;
+    int32 LivingExpenseEveryRolls = 8;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Investory|Turn Rules", meta=(ClampMin="0.0"))
     float LivingExpenseAmount = 500.0f;
